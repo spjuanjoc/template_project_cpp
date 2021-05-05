@@ -19,14 +19,12 @@ before_script:
   # Out-of-source build
   - mkdir "build"
   - cd build
-#  - conan profile update settings.compiler.libcxx=libstdc++11 default
-#  - conan profile show default
   # Install third-party libraries
   - conan install ../conanfile.txt
 
 script:
   # Configure the build system with tests enabled
-  - cmake -G"Unix Makefiles" -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True ..
+  - cmake -G"Unix Makefiles" -O3 -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True -DENABLE_COVERAGE=True -DCMAKE_BUILD_TYPE=Release ..
 #  - cmake .. -O0 -DCMAKE_BUILD_TYPE=Debug
 #  - cmake .. -G"Ninja" -O3 -DCMAKE_BUILD_TYPE=Release
 #  - ninja -j8
@@ -34,8 +32,8 @@ script:
   - cmake --build .
 
 after_success:
+  # Run all the tests
+  - ctest .
   # Upload report to codecov
   - bash <(curl -s https://codecov.io/bash)
   #  - bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov
-  # Run all the tests
-  - ctest .
