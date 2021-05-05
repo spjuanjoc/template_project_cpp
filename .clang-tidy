@@ -1,0 +1,13 @@
+---
+Checks: '*,-fuchsia-*,
+  -google-*,
+  -zircon-*,
+  -abseil-*,
+  -modernize-use-trailing-return-type,
+  -llvm-*,
+  -llvmlibc-*'
+WarningsAsErrors: '*'
+HeaderFilterRegex: ''
+FormatStyle:     none
+# The checks included here are disabled in the project
+# https://clang.llvm.org/extra/clang-tidy/checks/list.html
