@@ -3,12 +3,22 @@ image:
 
 clone_folder: c:\projects\source
 
-build_script:
+install:
+  - pip3 install --user ninja
+  - pip3 install --user conan
+  - conan user
+
+before_build:
 - cmd: >-
     mkdir build
 
     cd build
 
+    conan install ../conanfile.txt
+
+
+build_script:
+- cmd: >-
     cmake c:\projects\source -G "Visual Studio 16 2019" -DENABLE_TESTS=True
 
     cmake --build . --config "Debug"
