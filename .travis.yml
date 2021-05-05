@@ -1,6 +1,5 @@
 os: linux
 dist: focal
-sudo: false
 language: cpp
 compiler: gcc
 
@@ -12,6 +11,7 @@ compiler: gcc
 install:
   - pip3 install --user ninja
   - pip3 install --user conan
+  - pip3 install --user coverage
   # Automatic detection of arch, compiler, etc.
   - conan user
 
