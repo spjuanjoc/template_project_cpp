@@ -2,8 +2,8 @@
 #
 
 function(set_project_options project_options_target_name)
-  option(ENABLE_COVERAGE    "Enable gcov coverage" OFF)
-  option(ENABLE_WARN_AS_ERR "Enable treat compiler warnings as errors" OFF)
+  option(ENABLE_COVERAGE    "Enable gcov coverage" False)
+  option(ENABLE_WARN_AS_ERR "Enable treat compiler warnings as errors" False)
 
   set(MSVC_WARNINGS
       /W4           # Baseline reasonable warnings
