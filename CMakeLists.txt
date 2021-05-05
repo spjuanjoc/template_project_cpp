@@ -29,3 +29,19 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_BINARY_DIR})
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 #target_sources(${PROJECT_NAME} ${SOURCES})
+
+if (ENABLE_TESTS)
+  message(STATUS "Tests enabled")
+  enable_testing() # Must be placed before add_subdirectory
+  add_subdirectory(test)
+endif ()
+
+## Enable static analysis
+## clang-tidy
+## cppcheck
+
+## Enable runtime analysis
+## Sanitizers
+##  Address (ASan)
+##  Undefined Behavior (UBSan) (More on Undefined Behavior later)
+##  Thread
