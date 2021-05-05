@@ -1,0 +1,17 @@
+image:
+  - Visual Studio 2019
+
+clone_folder: c:\projects\source
+
+build_script:
+- cmd: >-
+    mkdir build
+
+    cd build
+
+    cmake c:\projects\source -G "Visual Studio 16 2019" -DENABLE_TESTS=True
+
+    cmake --build . --config "Debug"
+
+test_script:
+- cmd: ctest -C Debug
