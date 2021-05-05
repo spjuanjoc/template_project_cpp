@@ -45,3 +45,12 @@ endif ()
 ##  Address (ASan)
 ##  Undefined Behavior (UBSan) (More on Undefined Behavior later)
 ##  Thread
+
+## Install commands
+install(TARGETS ${PROJECT_NAME}
+    RUNTIME DESTINATION "/opt/${PROJECT_NAME}"
+    )
+
+set(CPACK_GENERATOR "DEB")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Juan Jose Castellanos <juancho.312@hotmail.com>")
+include(CPack)
