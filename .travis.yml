@@ -1,7 +1,10 @@
-os: linux
-dist: focal
 language: cpp
-compiler: gcc
+#os: linux
+#dist: focal
+#compiler: gcc
+os: osx
+compiler: clang
+osx_image: xcode11.2
 
 #addons:
 #  apt:
@@ -24,7 +27,8 @@ before_script:
 
 script:
   # Configure the build system with tests enabled
-  - cmake -G"Unix Makefiles" -O3 -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True -DENABLE_COVERAGE=True -DCMAKE_BUILD_TYPE=Release ..
+  - cmake -G"Xcode" -O3 -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True -DENABLE_COVERAGE=True -DCMAKE_BUILD_TYPE=Debug ..
+#  - cmake -G"Unix Makefiles" -O3 -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True -DENABLE_COVERAGE=True -DCMAKE_BUILD_TYPE=Release ..
 #  - cmake .. -O0 -DCMAKE_BUILD_TYPE=Debug
 #  - cmake .. -G"Ninja" -O3 -DCMAKE_BUILD_TYPE=Release
 #  - ninja -j8
