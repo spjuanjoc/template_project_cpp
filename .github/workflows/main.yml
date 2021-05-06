@@ -32,12 +32,17 @@ jobs:
           pip3 install --upgrade pip
           pip3 install --user conan
           conan user
+          conan profile update settings.compiler.libcxx=libstdc++11 default
           mkdir ${{runner.workspace}}/build
 
       - name: Install third-party packages
         shell: bash
         working-directory: ${{runner.workspace}}/build
-        run: conan install ${{runner.workspace}}
+        run: |
+          pwd
+          ls -l
+          ls -l ..
+          conan install ${{runner.workspace}}
 
       - name: Configure CMake
         shell: bash

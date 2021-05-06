@@ -15,7 +15,7 @@ before_build:
 
 build_script:
 - cmd: >-
-    cmake -G"Visual Studio 16 2019" -DCMAKE_MODULE_PATH=%CD:\=/% -DENABLE_TESTS=True -DCMAKE_BUILD_TYPE=Debug c:\projects\source
+    cmake -G"Visual Studio 16 2019" -DCMAKE_MODULE_PATH=%CD:\=/% -DENABLE_TESTS=True -DCMAKE_BUILD_TYPE=Release c:\projects\source
 
     cmake --build .
 

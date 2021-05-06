@@ -30,12 +30,12 @@ jobs:
         - choco install conan --params="'/AddToPath:1'"
       before_script:
         - cmd //c "RefreshEnv.cmd"
+      script:
         - conan user
         - mkdir "build"
         - cd build
         # Install third-party libraries
         - conan install ../conanfile.txt
-      script:
         - cmake -DCMAKE_MODULE_PATH=%CD:\=/% ..
 
 before_script:
