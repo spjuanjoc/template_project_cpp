@@ -1,26 +1,37 @@
 language: cpp
 
-install:
-  - pip3 install --upgrade pip
-  - pip3 install --user ninja
-  - pip3 install --user conan
-  - pip3 install --user coverage
-  # Automatic detection of arch, compiler, etc.
-  - conan user
-
 jobs:
   include:
     - os: osx
       compiler: clang
       osx_image: xcode11.2
+      install:
+        - brew update
+        - brew install conan
+
     - os: linux
       dist: focal
       compiler: gcc
+      install:
+        - pip3 install --upgrade pip
+        - pip3 install --user ninja
+        - pip3 install --user conan
+        - pip3 install --user coverage
+        # Automatic detection of arch, compiler, etc.
+        - conan user
+      after_success:
+        # Run all the tests
+        - ctest .
+        # Upload report to codecov
+        - bash <(curl -s https://codecov.io/bash)
 
-#addons:
-#  apt:
-#    packages:
-#      - libgl1-mesa-dev
+    - os: windows
+      install:
+        - choco install conan --params="'/AddToPath:1'"
+      before_script:
+        - cmd //c "RefreshEnv.cmd"
+        - conan user
+
 
 before_script:
   # Out-of-source build
@@ -33,13 +44,6 @@ script:
   # Configure the build system with tests enabled
   - cmake -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True -DENABLE_COVERAGE=True -DCMAKE_BUILD_TYPE=Debug ..
 #  - cmake .. -G"Ninja" -O3 -DCMAKE_BUILD_TYPE=Release
-#  - ninja -j8
   # Build
   - cmake --build .
-
-after_success:
-  # Run all the tests
-  - ctest .
-  # Upload report to codecov
-  - bash <(curl -s https://codecov.io/bash)
-  #  - bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov
+  #  - ninja -j8
