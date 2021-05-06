@@ -1,22 +1,26 @@
 language: cpp
-#os: linux
-#dist: focal
-#compiler: gcc
-os: osx
-compiler: clang
-osx_image: xcode11.2
+
+install:
+  - pip3 install --upgrade pip
+  - pip3 install --user ninja
+  - pip3 install --user conan
+  - pip3 install --user coverage
+  # Automatic detection of arch, compiler, etc.
+  - conan user
+
+jobs:
+  include:
+    - os: osx
+      compiler: clang
+      osx_image: xcode11.2
+    - os: linux
+      dist: focal
+      compiler: gcc
 
 #addons:
 #  apt:
 #    packages:
 #      - libgl1-mesa-dev
-
-install:
-  - pip3 install --user ninja
-  - pip3 install --user conan
-  - pip3 install --user coverage
-  # Automatic detection of arch, compiler, etc.
-#  - conan user
 
 before_script:
   # Out-of-source build
@@ -27,9 +31,7 @@ before_script:
 
 script:
   # Configure the build system with tests enabled
-  - cmake -G"Xcode" -O3 -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True -DENABLE_COVERAGE=True -DCMAKE_BUILD_TYPE=Debug ..
-#  - cmake -G"Unix Makefiles" -O3 -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True -DENABLE_COVERAGE=True -DCMAKE_BUILD_TYPE=Release ..
-#  - cmake .. -O0 -DCMAKE_BUILD_TYPE=Debug
+  - cmake -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True -DENABLE_COVERAGE=True -DCMAKE_BUILD_TYPE=Debug ..
 #  - cmake .. -G"Ninja" -O3 -DCMAKE_BUILD_TYPE=Release
 #  - ninja -j8
   # Build
