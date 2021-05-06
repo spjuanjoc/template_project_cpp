@@ -5,20 +5,18 @@ clone_folder: c:\projects\source
 
 install:
   - choco install conan --params="'/AddToPath:1'"
-  - conan user
 
 before_build:
 - cmd: >-
+    RefreshEnv.cmd
+    C:\Program Files\Conan\conan.exe user
     mkdir build
-
     cd build
-
-    conan install ../conanfile.txt
-
+    C:\Program Files\Conan\conan.exe install ../conanfile.txt
 
 build_script:
 - cmd: >-
-    cmake -G"Visual Studio 16 2019" -O3 -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True -DCMAKE_BUILD_TYPE=Debug c:\projects\source
+    cmake -G"Visual Studio 16 2019" -DCMAKE_MODULE_PATH=%CD:\=/% -DENABLE_TESTS=True -DCMAKE_BUILD_TYPE=Debug c:\projects\source
     cmake --build . --config "Debug"
 
 test_script:
