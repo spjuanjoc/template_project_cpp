@@ -4,11 +4,8 @@ image:
 clone_folder: c:\projects\source
 
 install:
-#  - pip3 install --user ninja
-  - pip install --user conan
-#  - pip3 install --user conan
-  - python.exe -m pip install --upgrade pip
-#  - conan user
+  - choco install conan --params="'/AddToPath:1'"
+  - conan user
 
 before_build:
 - cmd: >-
