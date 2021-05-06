@@ -32,7 +32,7 @@ jobs:
       - name: Configure CMake
         shell: bash
         working-directory: ${{runner.workspace}}/build
-        run: cmake -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+        run: cmake -DCMAKE_MODULE_PATH=${{runner.workspace}}/build $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
       - name: Build
         working-directory: ${{runner.workspace}}/build
         shell: bash
