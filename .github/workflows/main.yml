@@ -34,12 +34,15 @@ jobs:
           conan user
           mkdir ${{runner.workspace}}/build
 
+      - name: Install third-party packages
+        shell: bash
+        working-directory: ${{runner.workspace}}/build
+        run: conan install ${{runner.workspace}}
+
       - name: Configure CMake
         shell: bash
         working-directory: ${{runner.workspace}}/build
-        run: |
-          conan install ../conanfile.txt
-          cmake -DCMAKE_MODULE_PATH=${{runner.workspace}}/build -DCMAKE_BUILD_TYPE=$BUILD_TYPE $GITHUB_WORKSPACE
+        run: cmake -DCMAKE_MODULE_PATH=${{runner.workspace}}/build -DCMAKE_BUILD_TYPE=$BUILD_TYPE $GITHUB_WORKSPACE
 
       - name: Build
         working-directory: ${{runner.workspace}}/build

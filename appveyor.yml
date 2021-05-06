@@ -7,16 +7,11 @@ install:
   - choco install conan --params="'/AddToPath:1'"
 
 before_build:
-- cmd: >-
-    RefreshEnv.cmd
-
-    C:\Program Files\Conan\conan.exe user
-
-    mkdir build
-
-    cd build
-
-    C:\Program Files\Conan\conan.exe install ../conanfile.txt
+- cmd: RefreshEnv.cmd
+- conan user
+- mkdir build
+- cd build
+- conan install ..
 
 build_script:
 - cmd: >-
