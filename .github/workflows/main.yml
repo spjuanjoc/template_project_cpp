@@ -28,15 +28,24 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Create Build Environment
-        run: mkdir ${{runner.workspace}}/build
+        run: |
+          pip3 install --upgrade pip
+          pip3 install --user conan
+          conan user
+          mkdir ${{runner.workspace}}/build
+
       - name: Configure CMake
         shell: bash
         working-directory: ${{runner.workspace}}/build
-        run: cmake -DCMAKE_MODULE_PATH=${{runner.workspace}}/build -DCMAKE_BUILD_TYPE=$BUILD_TYPE $GITHUB_WORKSPACE
+        run: |
+          conan install ../conanfile.txt
+          cmake -DCMAKE_MODULE_PATH=${{runner.workspace}}/build -DCMAKE_BUILD_TYPE=$BUILD_TYPE $GITHUB_WORKSPACE
+
       - name: Build
         working-directory: ${{runner.workspace}}/build
         shell: bash
         run: cmake --build . --config $BUILD_TYPE
+
       - name: Test
         working-directory: ${{runner.workspace}}/build
         shell: bash
