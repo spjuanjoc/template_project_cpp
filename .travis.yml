@@ -30,8 +30,9 @@ jobs:
         - choco install conan --params="'/AddToPath:1'"
       before_script:
         - cmd //c "RefreshEnv.cmd"
-        - conan user
-
+        - C:\Program Files\Conan\conan.exe user
+      script:
+        - cmake -DCMAKE_MODULE_PATH=%CD:\=/% ..
 
 before_script:
   # Out-of-source build
