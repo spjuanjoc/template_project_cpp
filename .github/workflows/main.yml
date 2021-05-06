@@ -1,19 +1,12 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   ci:
     name: ${{ matrix.name }}
@@ -22,15 +15,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Github Actions requires a single row to be added to the build matrix.
-        # See https://help.github.com/en/articles/workflow-syntax-for-github-actions
-        name: [ 
+        name: [
           ubuntu-latest-gcc-10
-#           ubuntu-latest-clang-10,
-          # ubuntu-latest-clang-11,
-#           windows-2016-cl,
-#           windows-2019-cl,
-#          macOS-latest-xcode-11.3,
         ]
 
         include:
@@ -39,59 +25,21 @@ jobs:
             compiler: gcc
             version: "10"
 
-#           - name: ubuntu-latest-clang-10
-#             os: ubuntu-latest
-#             compiler: clang
-#             version: "10"
-
-          # fails like this: https://github.com/onqtam/doctest/runs/1562896512?check_suite_focus=true
-          # - name: ubuntu-latest-clang-11
-          #   os: ubuntu-latest
-          #   compiler: clang
-          #   version: "11"
-
-#           - name: windows-2016-cl
-#             os: windows-2016
-#             compiler: cl
-
-#           - name: windows-2019-cl
-#             os: windows-2019
-#             compiler: cl
-
-#           - name: macOS-latest-xcode-11.3
-#             os: macOS-latest
-#             compiler: xcode
-#             version: "11.3"
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
       - name: Create Build Environment
-        # Some projects don't allow in-source building, so create a separate build directory
-        # We'll use this as our working directory for all subsequent commands
         run: cmake -E make_directory ${{runner.workspace}}/build
-
       - name: Configure CMake
-        # Use a bash shell so we can use the same syntax for environment variable
-        # access regardless of the host operating system
         shell: bash
         working-directory: ${{runner.workspace}}/build
-        # Note the current convention is to use the -S and -B options here to specify source 
-        # and build directories, but this is only available with CMake 3.13 and higher.  
-        # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
         run: cmake -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-
       - name: Build
         working-directory: ${{runner.workspace}}/build
         shell: bash
-        # Execute the build.  You can specify a specific target with "--target <NAME>"
         run: cmake --build . --config $BUILD_TYPE
-
       - name: Test
         working-directory: ${{runner.workspace}}/build
         shell: bash
-        # Execute tests defined by the CMake configuration.  
-        # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
         run: ctest -V -C $BUILD_TYPE
+
+# Example https://github.com/onqtam/doctest/blob/master/.github/workflows/main.yml
