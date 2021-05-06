@@ -4,8 +4,9 @@ image:
 clone_folder: c:\projects\source
 
 install:
-  - pip3 install --user ninja
-  - pip3 install --user conan
+#  - pip3 install --user ninja
+  - pip install --user conan
+#  - pip3 install --user conan
   - conan user
 
 before_build:
@@ -19,8 +20,7 @@ before_build:
 
 build_script:
 - cmd: >-
-    cmake c:\projects\source -G "Visual Studio 16 2019" -DENABLE_TESTS=True
-
+    cmake -G"Visual Studio 16 2019" -O3 -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True -DCMAKE_BUILD_TYPE=Debug c:\projects\source
     cmake --build . --config "Debug"
 
 test_script:
