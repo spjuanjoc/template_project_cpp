@@ -16,7 +16,7 @@ install:
   - pip3 install --user conan
   - pip3 install --user coverage
   # Automatic detection of arch, compiler, etc.
-  - conan user
+#  - conan user
 
 before_script:
   # Out-of-source build
