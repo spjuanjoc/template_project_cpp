@@ -9,14 +9,19 @@ install:
 before_build:
 - cmd: >-
     RefreshEnv.cmd
+
     C:\Program Files\Conan\conan.exe user
+
     mkdir build
+
     cd build
+
     C:\Program Files\Conan\conan.exe install ../conanfile.txt
 
 build_script:
 - cmd: >-
     cmake -G"Visual Studio 16 2019" -DCMAKE_MODULE_PATH=%CD:\=/% -DENABLE_TESTS=True -DCMAKE_BUILD_TYPE=Debug c:\projects\source
+
     cmake --build .
 
 test_script:
