@@ -28,11 +28,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Create Build Environment
-        run: cmake -E make_directory ${{runner.workspace}}/build
+        run: mkdir ${{runner.workspace}}/build
       - name: Configure CMake
         shell: bash
         working-directory: ${{runner.workspace}}/build
-        run: cmake -DCMAKE_MODULE_PATH=${{runner.workspace}}/build $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+        run: cmake -DCMAKE_MODULE_PATH=${{runner.workspace}}/build -DCMAKE_BUILD_TYPE=$BUILD_TYPE $GITHUB_WORKSPACE
       - name: Build
         working-directory: ${{runner.workspace}}/build
         shell: bash
