@@ -1,0 +1,34 @@
+name: macos
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: macos-10.15
+    strategy:
+      matrix:
+        build_type: [Debug, Release]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create Build Environment
+        run: |
+          cmake -E make_directory ${{runner.workspace}}/build
+          brew install conan
+
+      - name: Configure
+        working-directory: ${{runner.workspace}}/build
+        run: |
+          conan install ..
+          cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
+                -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True \
+                -DENABLE_COVERAGE=True $GITHUB_WORKSPACE
+
+      - name: Build
+        working-directory: ${{runner.workspace}}/build
+        run: cmake --build . --config ${{matrix.build_type}}
+
+      - name: Test
+        working-directory: ${{runner.workspace}}/build
+        run: ctest -C ${{matrix.build_type}}
