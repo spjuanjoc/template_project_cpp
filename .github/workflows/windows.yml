@@ -9,42 +9,32 @@ jobs:
       matrix:
         # windows-2016 and windows-2019 have MSVC 2017 and 2019 installed
         # respectively: https://github.com/actions/virtual-environments.
-        os: [windows-2016, windows-2019]
+        os: [windows-2019]
         platform: [Win32]
         build_type: [Debug]
         standard: [17]
-        include:
-          - os: windows-2016
-            platform: Win32
-            build_type: Debug
-            shared: -DBUILD_SHARED_LIBS=ON
-        exclude:
-          - os: windows-2016
-            platform: Win32
-          - os: windows-2016
-            standard: 17
-          - os: windows-2016
-            standard: 20
-          - os: windows-2019
-            standard: 11
-          - os: windows-2019
-            standard: 20
-            platform: Win32
 
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install and configure Conan
+        run: |
+          choco install conan --params="'/AddToPath:1'"
+          RefreshEnv.cmd
+          conan
+
       - name: Create Build Environment
         run: |
           cmake -E make_directory ${{runner.workspace}}/build
-          choco install conan --params="'/AddToPath:1'"
-          RefreshEnv.cmd
 
       - name: Configure
         # Use a bash shell for $GITHUB_WORKSPACE.
         shell: bash
         working-directory: ${{runner.workspace}}/build
         run: |
+          pwd
+          ls
+          ls ..
           cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} ${{matrix.shared}} \
                 -A ${{matrix.platform}} \
                 -DCMAKE_CXX_STANDARD=${{matrix.standard}} \

@@ -15,9 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Create Build Environment
+      - name: Install and configure Conan
         run: |
           pip3 install conan
+          conan user
+
+      - name: Create Build Environment
+        run: |
           cmake -E make_directory ${{runner.workspace}}/build
 
       - name: Configure
@@ -26,6 +30,9 @@ jobs:
           CXX: ${{matrix.cxx}}
           CXXFLAGS: ${{matrix.cxxflags}}
         run: |
+          pwd
+          ls
+          ls ..
           cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
                 -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=False \
                 -DENABLE_COVERAGE=False $GITHUB_WORKSPACE
