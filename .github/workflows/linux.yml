@@ -23,13 +23,11 @@ jobs:
           conan profile update settings.compiler.libcxx=libstdc++11 default
           conan profile show default
 
-
       - name: Create Build Environment
         run: |
           cmake -E make_directory ${{runner.workspace}}/build
 
       - name: Install third-party packages
-        # Use a bash shell for $GITHUB_WORKSPACE.
         shell: bash
         working-directory: ${{runner.workspace}}/build
         run: conan install $GITHUB_WORKSPACE
@@ -41,8 +39,8 @@ jobs:
           CXXFLAGS: ${{matrix.cxxflags}}
         run: |
           cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
-                -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=False \
-                -DENABLE_COVERAGE=False $GITHUB_WORKSPACE
+                -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True \
+                -DENABLE_COVERAGE=True $GITHUB_WORKSPACE
 
       - name: Build
         working-directory: ${{runner.workspace}}/build
