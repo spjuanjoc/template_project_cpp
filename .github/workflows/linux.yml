@@ -8,22 +8,16 @@ jobs:
     strategy:
       matrix:
         cxx: [g++-10]
-        build_type: [Debug, Release]
+        build_type: [Debug]
         std: [17]
         os: [ubuntu-20.04]
-        include:
-          - cxx: g++-10
-            build_type: Debug
-            std: 17
-            os: ubuntu-20.04
-            install: pip3 install conan
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Create Build Environment
         run: |
-          ${{matrix.install}}
+          pip3 install conan
           cmake -E make_directory ${{runner.workspace}}/build
 
       - name: Configure
@@ -32,15 +26,14 @@ jobs:
           CXX: ${{matrix.cxx}}
           CXXFLAGS: ${{matrix.cxxflags}}
         run: |
-          conan install ..
           cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
-                -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True \
-                -DENABLE_COVERAGE=True $GITHUB_WORKSPACE
+                -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=False \
+                -DENABLE_COVERAGE=False $GITHUB_WORKSPACE
 
       - name: Build
         working-directory: ${{runner.workspace}}/build
         run: cmake --build . --config ${{matrix.build_type}}
 
-      - name: Test
-        working-directory: ${{runner.workspace}}/build
-        run: ctest -C ${{matrix.build_type}}
+#      - name: Test
+#        working-directory: ${{runner.workspace}}/build
+#        run: ctest -C ${{matrix.build_type}}
