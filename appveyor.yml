@@ -1,23 +1,23 @@
-image:
-  - Visual Studio 2019
-
-clone_folder: c:\projects\source
-
-install:
-  - choco install conan --params="'/AddToPath:1'"
-
-before_build:
-- cmd: RefreshEnv.cmd
-- conan user
-- mkdir build
-- cd build
-- conan install ..
-
-build_script:
-- cmd: >-
-    cmake -G"Visual Studio 16 2019" -DCMAKE_MODULE_PATH=%CD:\=/% -DENABLE_TESTS=True -DCMAKE_BUILD_TYPE=Release c:\projects\source
-
-    cmake --build .
-
-test_script:
-- cmd: ctest -C Debug
+#image:
+#  - Visual Studio 2019
+#
+#clone_folder: c:\projects\source
+#
+#install:
+#  - choco install conan --params="'/AddToPath:1'"
+#
+#before_build:
+#- cmd: RefreshEnv.cmd
+#- conan user
+#- mkdir build
+#- cd build
+#- conan install ..
+#
+#build_script:
+#- cmd: >-
+#    cmake -G"Visual Studio 16 2019" -DCMAKE_MODULE_PATH=%CD:\=/% -DENABLE_TESTS=True -DCMAKE_BUILD_TYPE=Release c:\projects\source
+#
+#    cmake --build .
+#
+#test_script:
+#- cmd: ctest -C Debug

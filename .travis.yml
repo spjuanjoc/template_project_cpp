@@ -25,22 +25,22 @@ jobs:
         # Upload report to codecov
         - bash <(curl -s https://codecov.io/bash)
 
-    - os: windows
-      install:
-        - choco install conan --params="'/AddToPath:1'"
-      before_script:
-        - cmd //c "RefreshEnv.cmd"
-      script:
-        - conan user
-        - mkdir "build"
-        - cd build
-        # Install third-party libraries
-        - conan install ../conanfile.txt
-        - cmake -DCMAKE_MODULE_PATH=%CD:\=/% ..
+#    - os: windows
+#      install:
+#        - choco install conan --params="'/AddToPath:1'"
+#      before_script:
+#        - cmd //c "RefreshEnv.cmd"
+#      script:
+#        - conan user
+#        - mkdir "build"
+#        - cd build
+#        # Install third-party libraries
+#        - conan install ../conanfile.txt
+#        - cmake -DCMAKE_MODULE_PATH=%CD:\=/% ..
 
 before_script:
   # Out-of-source build
-  - mkdir "build"
+  - mkdir build
   - cd build
   # Install third-party libraries
   - conan install ../conanfile.txt
