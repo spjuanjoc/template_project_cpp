@@ -15,7 +15,7 @@ jobs:
       - name: Install and configure Conan
         run: |
           brew install conan
-          conan user
+          conan profile show default
 
       - name: Create Build Environment
         run: |

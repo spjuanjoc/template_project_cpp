@@ -18,7 +18,7 @@ jobs:
       - name: Install and configure Conan
         run: |
           pip3 install conan
-          conan user
+          conan profile show default
 
       - name: Create Build Environment
         run: |

@@ -24,13 +24,12 @@ jobs:
 
       - name: Check conan
         # Use a bash shell for $GITHUB_WORKSPACE.
-        shell: bash
-        working-directory: ${{runner.workspace}}/build
-        run: conan
+#        shell: bash
+#        working-directory: ${{runner.workspace}}/build
+        run: conan profile show default
 
       - name: Create Build Environment
-        run: |
-          cmake -E make_directory ${{runner.workspace}}/build
+        run: cmake -E make_directory ${{runner.workspace}}/build
 
       - name: Install third-party packages
         # Use a bash shell for $GITHUB_WORKSPACE.
@@ -43,9 +42,8 @@ jobs:
         shell: bash
         working-directory: ${{runner.workspace}}/build
         run: |
-          cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} ${{matrix.shared}} \
+          cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
                 -A ${{matrix.platform}} \
-                -DCMAKE_CXX_STANDARD=${{matrix.standard}} \
                 -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=False $GITHUB_WORKSPACE
 
       - name: Build
