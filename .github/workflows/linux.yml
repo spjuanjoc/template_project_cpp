@@ -24,15 +24,18 @@ jobs:
         run: |
           cmake -E make_directory ${{runner.workspace}}/build
 
+      - name: Install third-party packages
+        # Use a bash shell for $GITHUB_WORKSPACE.
+        shell: bash
+        working-directory: ${{runner.workspace}}/build
+        run: conan install $GITHUB_WORKSPACE
+
       - name: Configure
         working-directory: ${{runner.workspace}}/build
         env:
           CXX: ${{matrix.cxx}}
           CXXFLAGS: ${{matrix.cxxflags}}
         run: |
-          pwd
-          ls
-          ls ..
           cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
                 -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=False \
                 -DENABLE_COVERAGE=False $GITHUB_WORKSPACE

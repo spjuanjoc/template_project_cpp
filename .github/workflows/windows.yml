@@ -21,20 +21,28 @@ jobs:
         run: |
           choco install conan --params="'/AddToPath:1'"
           RefreshEnv.cmd
-          conan
+
+      - name: Check conan
+        # Use a bash shell for $GITHUB_WORKSPACE.
+        shell: bash
+        working-directory: ${{runner.workspace}}/build
+        run: conan
 
       - name: Create Build Environment
         run: |
           cmake -E make_directory ${{runner.workspace}}/build
+
+      - name: Install third-party packages
+        # Use a bash shell for $GITHUB_WORKSPACE.
+        shell: bash
+        working-directory: ${{runner.workspace}}/build
+        run: conan install $GITHUB_WORKSPACE
 
       - name: Configure
         # Use a bash shell for $GITHUB_WORKSPACE.
         shell: bash
         working-directory: ${{runner.workspace}}/build
         run: |
-          pwd
-          ls
-          ls ..
           cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} ${{matrix.shared}} \
                 -A ${{matrix.platform}} \
                 -DCMAKE_CXX_STANDARD=${{matrix.standard}} \
