@@ -23,10 +23,14 @@ jobs:
           RefreshEnv.cmd
 
       - name: Check conan
-        shell: bash
+#        shell: bash
         run: |
+          RefreshEnv.cmd
+
           conan profile list
+
           conan profile new default --detect
+
           conan profile show default
 
       - name: Create Build Environment

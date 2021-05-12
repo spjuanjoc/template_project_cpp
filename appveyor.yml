@@ -17,7 +17,7 @@ before_build:
 
 build_script:
 - cmd: >-
-    cmake -DCMAKE_MODULE_PATH=%CD:\=/% -DENABLE_TESTS=False c:\projects\source
+    cmake -DCMAKE_MODULE_PATH=%CD:\=/% -DENABLE_TESTS=True c:\projects\source
 
     cmake --build .
 
