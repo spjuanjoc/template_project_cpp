@@ -67,7 +67,7 @@ function(set_project_options project_options_target_name)
 
   if(MSVC)
     set(PROJECT_WARNINGS ${MSVC_WARNINGS})
-    target_compile_definitions(${project_options_target_name} PRIVATE ITERATOR_DEBUG_LEVEL=0)
+    target_compile_definitions(${project_options_target_name} PRIVATE NODEFAULTLIB)
   elseif(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
     set(PROJECT_WARNINGS ${CLANG_WARNINGS})
   elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
