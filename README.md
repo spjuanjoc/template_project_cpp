@@ -2,13 +2,14 @@
 
 .
 
-| System | App |Status|
-|---|---|:---:|
+| System | App       |Status|
+|  ---   |  ---      |:---:|
 |Linux   | GH Actions| [![linux](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/linux.yml/badge.svg?branch=main)](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/linux.yml) |
 |OSX     | GH Actions| [![macos](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/macosx.yml/badge.svg)](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/macosx.yml) |
-|Windows | GH Actions| [![windows](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/windows.yml/badge.svg)](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/windows.yml) |
 |Windows |AppVeyor   | [![Build status](https://ci.appveyor.com/api/projects/status/kkg8iaq74wql90rj/branch/main?svg=true)](https://ci.appveyor.com/project/spjuanjoc/template-project-cpp/branch/main) |
-|Coverage      |codecov    | [![codecov](https://codecov.io/gh/spjuanjoc/template_project_cpp/branch/main/graph/badge.svg)](https://codecov.io/gh/spjuanjoc/template_project_cpp) |
+|Coverage|codecov    | [![codecov](https://codecov.io/gh/spjuanjoc/template_project_cpp/branch/main/graph/badge.svg)](https://codecov.io/gh/spjuanjoc/template_project_cpp) |
+
+[comment]: <> (|Windows | GH Actions| [![windows]&#40;https://github.com/spjuanjoc/template_project_cpp/actions/workflows/windows.yml/badge.svg&#41;]&#40;https://github.com/spjuanjoc/template_project_cpp/actions/workflows/windows.yml&#41; |)
 
 For codecov add repository: [Codecov Dashboard](https://codecov.io/gh/)  
 For AppVeyor add project: [AppVeyor Projects](https://ci.appveyor.com/project)  

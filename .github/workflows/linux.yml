@@ -15,6 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install coverage
+        run: |
+          pip3 install --upgrade pip
+          pip3 install coverage
+
       - name: Install and configure Conan
         run: |
           pip3 install conan
