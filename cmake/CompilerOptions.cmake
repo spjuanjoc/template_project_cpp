@@ -7,6 +7,10 @@ function(set_project_options project_options_target_name)
 
   set(MSVC_WARNINGS
       /W4           # Baseline reasonable warnings
+#      /MD           # C++ runtime library set to Multi-threaded DLL
+      /MDd          # C++ runtime library set to Multi-threaded debug DLL
+      /D_ITERATOR_DEBUG_LEVEL=0 #
+      /O2           # sets a combination of optimizations that optimizes code for maximum speed.
       /permissive-  # standards conformance mode for MSVC compiler.
       /w14242       # 'identifier': conversion from 'type1' to 'type1', possible loss of data
       /w14254       # 'operator': conversion from 'type1:field_bits' to 'type2:field_bits', possible loss of data
@@ -44,6 +48,7 @@ function(set_project_options project_options_target_name)
       -Wnull-dereference    # warn if a null dereference is detected
       -Wdouble-promotion    # warn if float is implicit promoted to double
       -Wformat=2            # warn on security issues around functions that format output (ie printf)
+      -O3                   # Set optimization level
       )
 
   set(GCC_WARNINGS
