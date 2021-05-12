@@ -17,9 +17,9 @@ before_build:
 
 build_script:
 - cmd: >-
-    cmake -DCMAKE_MODULE_PATH=%CD:\=/% -DENABLE_TESTS=True c:\projects\source
+    cmake -DCMAKE_MODULE_PATH=%CD:\=/% -DENABLE_TESTS=True -DCMAKE_BUILD_TYPE=Release c:\projects\source
 
     cmake --build .
 
 test_script:
-- cmd: ctest -C Debug
+- cmd: ctest -C Release
