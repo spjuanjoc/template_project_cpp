@@ -23,10 +23,10 @@ endif ()
 
 ## Find third-party packages
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_BINARY_DIR})
-#find_package(fmt REQUIRED)
+find_package(fmt REQUIRED)
 
 ## conan_cmake_run https://github.com/selassje/eyeTracker/blob/master/CMakeLists.txt
-#target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
+target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 #target_sources(${PROJECT_NAME} ${SOURCES})
