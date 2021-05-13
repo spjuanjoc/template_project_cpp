@@ -57,5 +57,7 @@ jobs:
 
       - name: Coverage
         shell: bash
+        env:
+          CODECOV_TOKEN: "7526d1fa-caa6-41f8-9ed0-41982d2504d4"
         working-directory: ${{runner.workspace}}/build
         run: bash <(curl -s https://codecov.io/bash)
