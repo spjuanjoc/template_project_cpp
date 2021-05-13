@@ -41,7 +41,7 @@ jobs:
         working-directory: ${{runner.workspace}}/build
         env:
           CXX: ${{matrix.cxx}}
-          CXXFLAGS: ${{matrix.cxxflags}}
+#          CXXFLAGS: ${{matrix.cxxflags}}
         run: |
           cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
                 -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True \
