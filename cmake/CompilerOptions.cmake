@@ -7,9 +7,6 @@ function(set_project_options project_options_target_name)
 
   set(MSVC_WARNINGS
       /W4           # Baseline reasonable warnings
-#      /MD           # C++ runtime library set to Multi-threaded DLL
-#      /MDd          # C++ runtime library set to Multi-threaded debug DLL
-#      /D_ITERATOR_DEBUG_LEVEL=0 #
       /O2           # sets a combination of optimizations that optimizes code for maximum speed.
       /permissive-  # standards conformance mode for MSVC compiler.
       /w14242       # 'identifier': conversion from 'type1' to 'type1', possible loss of data
@@ -67,8 +64,6 @@ function(set_project_options project_options_target_name)
 
   if(MSVC)
     set(PROJECT_WARNINGS ${MSVC_WARNINGS})
-#    target_compile_definitions(${project_options_target_name} PRIVATE NODEFAULTLIB)
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:library" PARENT_SCOPE)
   elseif(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
     set(PROJECT_WARNINGS ${CLANG_WARNINGS})
   elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
