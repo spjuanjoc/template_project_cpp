@@ -15,21 +15,33 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 include(cmake/CompilerOptions.cmake)
 set_project_options(${PROJECT_NAME})
 
-## Check custom options
-if (ENABLE_PCH) # Since CMake 3.15
-  target_precompile_headers(${PROJECT_NAME} INTERFACE <vector> <string> <map> <utility>)
-  message("PCH enabled")
-endif ()
+## Setup Conan
+## conan_cmake_run https://github.com/selassje/eyeTracker/blob/master/CMakeLists.txt
+# Download automatically, you can also just copy the conan.cmake file
+if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
+  message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
+  file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/master/conan.cmake"
+      "${CMAKE_BINARY_DIR}/conan.cmake")
+endif()
+
+include(${CMAKE_BINARY_DIR}/conan.cmake)
+conan_cmake_run(CONANFILE conanfile.txt BASIC_SETUP #[[BUILD missing]])
 
 ## Find third-party packages
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_BINARY_DIR})
 find_package(fmt REQUIRED)
 
-## conan_cmake_run https://github.com/selassje/eyeTracker/blob/master/CMakeLists.txt
+## Target
 target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 #target_sources(${PROJECT_NAME} ${SOURCES})
+
+## Check custom options
+if (ENABLE_PCH) # Since CMake 3.15
+  target_precompile_headers(${PROJECT_NAME} INTERFACE <vector> <string> <map> <utility>)
+  message("PCH enabled")
+endif ()
 
 if (ENABLE_TESTS)
   message(STATUS "Tests enabled")
