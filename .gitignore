@@ -30,6 +30,7 @@
 *.exe
 *.out
 *.app
+*.bin
 
 # Build folders
 *cmake-build-*
@@ -44,9 +45,10 @@ build/
 install_manifest*
 
 # IDE folders
+# Jetbrains
 .idea
+# Code::Blocks project files
 *.cbp
-
 
 # architecture precompiled file
 arch.c
