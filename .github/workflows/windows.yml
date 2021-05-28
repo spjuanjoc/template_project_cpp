@@ -30,9 +30,9 @@ jobs:
 #          conan profile new default --detect
 #          conan profile show default
 #
-#      - name: Create Build Environment
-#        run: cmake -E make_directory ${{runner.workspace}}/build
-#
+      - name: Create Build Environment
+        run: cmake -E make_directory ${{runner.workspace}}/build
+
 #      - name: Install third-party packages
 #        shell: bash
 #        working-directory: ${{runner.workspace}}/build
