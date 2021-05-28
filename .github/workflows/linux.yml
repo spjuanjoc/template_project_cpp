@@ -49,10 +49,12 @@ jobs:
 
       - name: Build
         working-directory: ${{runner.workspace}}/build
-        run: cmake --build . --config ${{matrix.build_type}}
+        run: |
+          cmake --build . --config ${{matrix.build_type}}
+          ls -R
 
       - name: Test
-        working-directory: ${{runner.workspace}}/build
+        working-directory: ${{runner.workspace}}/build/bin
         run: ctest -C ${{matrix.build_type}}
 
       - name: Coverage
