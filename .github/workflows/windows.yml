@@ -38,13 +38,13 @@ jobs:
 #        working-directory: ${{runner.workspace}}/build
 #        run: conan install $GITHUB_WORKSPACE
 #
-#      - name: Configure
-#        shell: bash
-#        working-directory: ${{runner.workspace}}/build
-#        run: |
-#          cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
-#                -A ${{matrix.platform}} \
-#                -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=False $GITHUB_WORKSPACE
+      - name: Configure
+        shell: bash
+        working-directory: ${{runner.workspace}}/build
+        run: |
+          cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
+                -A ${{matrix.platform}} \
+                -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=False $GITHUB_WORKSPACE
 #
 #      - name: Build
 #        working-directory: ${{runner.workspace}}/build
