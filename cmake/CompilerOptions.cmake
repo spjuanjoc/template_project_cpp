@@ -2,12 +2,11 @@
 #
 
 function(set_project_options project_options_target_name)
-  option(ENABLE_COVERAGE    "Enable gcov coverage" False)
-  option(ENABLE_WARN_AS_ERR "Enable treat compiler warnings as errors" False)
+  option(ENABLE_COVERAGE  "Enable gcov coverage"                      False)
+  option(ENABLE_WERROR    "Enable treat compiler warnings as errors"  False)
 
-  set(MSVC_WARNINGS
+  set(MSVC_OPTIONS
       /W4           # Baseline reasonable warnings
-      /O2           # sets a combination of optimizations that optimizes code for maximum speed.
       /permissive-  # standards conformance mode for MSVC compiler.
       /w14242       # 'identifier': conversion from 'type1' to 'type1', possible loss of data
       /w14254       # 'operator': conversion from 'type1:field_bits' to 'type2:field_bits', possible loss of data
@@ -30,9 +29,9 @@ function(set_project_options project_options_target_name)
       /w14928       # illegal copy-initialization; more than one user-defined conversion has been implicitly applied
       )
 
-  set(CLANG_WARNINGS
+  set(CLANG_OPTIONS
       -Wall
-      -Wpedantic            # warn if non-standard C++ is used
+      -pedantic             # warn if non-standard C++ is used
       -Wextra               # reasonable and standard
       -Wshadow              # warn the user if a variable declaration shadows one from a parent context
       -Wnon-virtual-dtor    # warn the user if a class with virtual functions has a non-virtual destructor. This helps catch hard to track down memory errors
@@ -41,15 +40,14 @@ function(set_project_options project_options_target_name)
       -Wunused              # warn on anything being unused
       -Woverloaded-virtual  # warn if you overload (not override) a virtual function
       -Wconversion          # warn on type conversions that may lose data
-      -Wsign-conversion     # warn on sign conversions
+      -Wsign-conversion     # warn on signed-unsigned conversions
       -Wnull-dereference    # warn if a null dereference is detected
       -Wdouble-promotion    # warn if float is implicit promoted to double
       -Wformat=2            # warn on security issues around functions that format output (ie printf)
-      -O3                   # Set optimization level
       )
 
-  set(GCC_WARNINGS
-      ${CLANG_WARNINGS}
+  set(GCC_OPTIONS
+      ${CLANG_OPTIONS}
       -Wmisleading-indentation  # warn if indentation implies blocks where blocks do not exist
       -Wduplicated-cond         # warn if if / else chain has duplicated conditions
       -Wduplicated-branches     # warn if if / else branches have duplicated code
@@ -57,17 +55,18 @@ function(set_project_options project_options_target_name)
       -Wuseless-cast            # warn if you perform a cast to the same type
       )
 
-  if(ENABLE_WARN_AS_ERR)
-    set(CLANG_WARNINGS ${CLANG_WARNINGS} -Werror)
-    set(MSVC_WARNINGS ${MSVC_WARNINGS} /WX)
+  if(ENABLE_WERROR)
+    set(CLANG_OPTIONS ${CLANG_OPTIONS}  -Werror)
+    set(GCC_OPTIONS   ${GCC_OPTIONS}    -Werror)
+    set(MSVC_OPTIONS  ${MSVC_OPTIONS}   /WX)
   endif()
 
   if(MSVC)
-    set(PROJECT_WARNINGS ${MSVC_WARNINGS})
+    set(PROJECT_OPTIONS ${MSVC_OPTIONS})
   elseif(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
-    set(PROJECT_WARNINGS ${CLANG_WARNINGS})
+    set(PROJECT_OPTIONS ${CLANG_OPTIONS})
   elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    set(PROJECT_WARNINGS ${GCC_WARNINGS})
+    set(PROJECT_OPTIONS ${GCC_OPTIONS})
     target_link_libraries(${project_options_target_name} PRIVATE pthread)
     if(ENABLE_COVERAGE)
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage" PARENT_SCOPE) # PARENT_SCOPE required since this is called from a function
@@ -77,9 +76,9 @@ function(set_project_options project_options_target_name)
     message(AUTHOR_WARNING "No compiler warnings set for '${CMAKE_CXX_COMPILER_ID}' compiler.")
   endif()
 
-  target_compile_options(${project_options_target_name} INTERFACE ${PROJECT_WARNINGS})
+  target_compile_options(${project_options_target_name} PRIVATE ${PROJECT_OPTIONS}) # for header-only use INTERFACE
 
-  message(STATUS "Warnings enabled: ${PROJECT_WARNINGS}")
+  message(STATUS "Project options: ${PROJECT_OPTIONS}")
   message(STATUS "Compiler: ${CMAKE_CXX_COMPILER}")
   message(STATUS "Compiler ID: ${CMAKE_CXX_COMPILER_ID}")
   message(STATUS "Platform: ${CMAKE_SYSTEM_NAME}")
