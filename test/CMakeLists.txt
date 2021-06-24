@@ -4,6 +4,10 @@ file(GLOB_RECURSE TEST_SOURCES LIST_DIRECTORIES false test.*.cpp)
 
 add_executable(${TEST_NAME} ${TEST_SOURCES})
 add_test(${TEST_NAME} ${TEST_NAME}) # for ctest
+#add_test(NAME ${TEST_NAME}
+#    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+#    COMMAND ${TEST_NAME})
+
 #add_definitions(-DGTEST_LANGUAGE_CXX11) # for gtest
 
 ## Compiler options

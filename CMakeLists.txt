@@ -4,12 +4,24 @@ project(template_project_cpp VERSION 0.0.1 LANGUAGES CXX)
 option(ENABLE_PCH   "Enable Precompiled Headers"  False)
 option(ENABLE_TESTS "Enable tests"                False)
 
+
 ## Sources common for all platforms .cpp .hpp
-set(SOURCES
-    src/main.cpp
+if(${CMAKE_SYSTEM_NAME} MATCHES "Linux") # .cc .hh
+  set(PLATFORM_EXTENSION cc)
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows") # .cxx .hxx
+  set(PLATFORM_EXTENSION cxx)
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin") # OSX .c++ .h++
+  set(PLATFORM_EXTENSION c++)
+endif()
+
+file(GLOB_RECURSE
+    SOURCE_FILES
+      src/*.cpp
+      src/*.inl
+      src/*.${PLATFORM_EXTENSION}
     )
 
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 ## Compiler options
 include(cmake/CompilerOptions.cmake)
