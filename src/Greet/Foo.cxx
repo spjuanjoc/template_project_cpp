@@ -6,11 +6,11 @@
  */
 
 #include "Greet/Foo.h"
-#include <iostream>
+#include <fmt/core.h>
 
 using namespace Greet;
 
 void Foo::greetFromPlatform() const
 {
-  std::cout << "Hello foo: " << m_value << " from Windows\n";
+  fmt::print("Hello foo: {} from Windows\n", m_value);
 }

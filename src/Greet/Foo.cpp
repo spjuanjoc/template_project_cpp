@@ -6,7 +6,7 @@
  */
 
 #include "Greet/Foo.h"
-#include <iostream>
+#include <fmt/core.h>
 
 using namespace Greet;
 
@@ -16,5 +16,5 @@ Foo::Foo(int value) : m_value(value)
 
 void Foo::greet() const
 {
-  std::cout << "Hello foo: " << m_value << '\n';
+  fmt::print("Hello foo: {}\n", m_value);
 }

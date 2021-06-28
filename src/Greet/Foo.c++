@@ -6,12 +6,12 @@
  *
  */
 
-#include "Foo.h"
-#include <iostream>
+#include "Greet/Foo.h"
+#include <fmt/core.h>
 
 using namespace Greet;
 
 void Foo::greetFromPlatform() const
 {
-  std::cout << "Hello foo: " << m_value << " from OSX\n";
+  fmt::print("Hello foo: {} from OSX\n", m_value);
 }
