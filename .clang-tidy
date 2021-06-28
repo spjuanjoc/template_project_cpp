@@ -1,9 +1,12 @@
 ---
-Checks: '*,-fuchsia-*,
+Checks: '*,
+  -altera-struct-pack-align,
+  -fuchsia-*,
   -google-*,
   -zircon-*,
   -abseil-*,
   -modernize-use-trailing-return-type,
+  -modernize-use-nodiscard,
   -llvm-*,
   -llvmlibc-*'
 WarningsAsErrors: '*'
