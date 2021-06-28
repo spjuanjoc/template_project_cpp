@@ -7,49 +7,45 @@ jobs:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        # windows-2016 and windows-2019 have MSVC 2017 and 2019 installed
-        # respectively: https://github.com/actions/virtual-environments.
         os: [windows-2019]
-        platform: [Win32]
+        platform: [x64]
         build_type: [Debug]
         standard: [17]
 
     steps:
       - uses: actions/checkout@v2
 
+      - run: choco install -y conan --params="'/AddToPath:1'"
       - name: Install and configure Conan
+        shell: cmd
         run: |
-          choco install conan --params="'/AddToPath:1'"
-          RefreshEnv.cmd
+          call refreshenv
+          conan profile new default --detect
+          conan profile show default
+          echo "%PATH%" >> %GITHUB_PATH%
+          echo "PATH = %PATH%"
 
-# TODO validate how to use conan. Is it added to PATH?
-#      - name: Check conan
-#        shell: bash
-#        run: |
-#          conan profile list
-#          conan profile new default --detect
-#          conan profile show default
-#
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}/build
 
-#      - name: Install third-party packages
-#        shell: bash
-#        working-directory: ${{runner.workspace}}/build
-#        run: conan install $GITHUB_WORKSPACE
-#
+      - name: Install third-party packages
+        shell: bash
+        working-directory: ${{runner.workspace}}/build
+        run: conan install $GITHUB_WORKSPACE/conanfile.txt -s build_type=Debug --build missing
+
       - name: Configure
         shell: bash
         working-directory: ${{runner.workspace}}/build
         run: |
+          echo "PATH: ${PATH}"
           cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
                 -A ${{matrix.platform}} \
-                -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=False $GITHUB_WORKSPACE
-#
-#      - name: Build
-#        working-directory: ${{runner.workspace}}/build
-#        run: cmake --build . --config ${{matrix.build_type}}
+                -DCMAKE_MODULE_PATH=%CD:\=/% -DENABLE_TESTS=False $GITHUB_WORKSPACE
 
-#      - name: Test
-#        working-directory: ${{runner.workspace}}/build
-#        run: ctest -C ${{matrix.build_type}}
+      - name: Build
+        working-directory: ${{runner.workspace}}/build
+        run: cmake --build . --config ${{matrix.build_type}}
+
+      - name: Test
+        working-directory: ${{runner.workspace}}/build
+        run: ctest -V -C ${{matrix.build_type}} --output-on-failure
