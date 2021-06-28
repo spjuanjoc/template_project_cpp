@@ -23,10 +23,8 @@ jobs:
       - name: Install and configure Conan
         run: |
           pip3 install conan
-          conan profile list
           conan profile new default --detect
           conan profile update settings.compiler.libcxx=libstdc++11 default
-          conan profile show default
 
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}/build
@@ -36,7 +34,7 @@ jobs:
         working-directory: ${{runner.workspace}}/build
         run: conan install $GITHUB_WORKSPACE
 
-      - name: Configure
+      - name: CMake Configure
         working-directory: ${{runner.workspace}}/build
         env:
           CXX: ${{matrix.cxx}}
@@ -46,17 +44,17 @@ jobs:
                 -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True \
                 -DENABLE_COVERAGE=True $GITHUB_WORKSPACE
 
-      - name: Build
+      - name: CMake Build
         working-directory: ${{runner.workspace}}/build
         run: cmake --build . --config ${{matrix.build_type}}
 
       - name: Test
         working-directory: ${{runner.workspace}}/build/
-        run: ctest -C ${{matrix.build_type}}
+        run: ctest -V -C ${{matrix.build_type}} --output-on-failure
 
-      - name: Coverage
-        shell: bash
-        env:
-          CODECOV_TOKEN: "7526d1fa-caa6-41f8-9ed0-41982d2504d4"
-        working-directory: ${{runner.workspace}}/build
-        run: bash <(curl -s https://codecov.io/bash)
+#      - name: Coverage
+#        shell: bash
+#        env:
+#          CODECOV_TOKEN: "7526d1fa-caa6-41f8-9ed0-41982d2504d4"
+#        working-directory: ${{runner.workspace}}/build
+#        run: bash <(curl -s https://codecov.io/bash)

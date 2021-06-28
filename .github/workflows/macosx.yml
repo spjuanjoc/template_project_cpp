@@ -41,4 +41,4 @@ jobs:
 
       - name: Test
         working-directory: ${{runner.workspace}}/build
-        run: ctest -C ${{matrix.build_type}}
+        run: ctest -V -C ${{matrix.build_type}} --output-on-failure
