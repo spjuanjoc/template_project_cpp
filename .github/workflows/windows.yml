@@ -33,16 +33,16 @@ jobs:
         working-directory: ${{runner.workspace}}/build
         run: conan install $GITHUB_WORKSPACE/conanfile.txt -s build_type=Debug --build missing
 
-      - name: Configure
+      - name: CMake Configure
         shell: bash
         working-directory: ${{runner.workspace}}/build
         run: |
           echo "PATH: ${PATH}"
           cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
-                -A ${{matrix.platform}} \
-                -DCMAKE_MODULE_PATH=%CD:\=/% -DENABLE_TESTS=False $GITHUB_WORKSPACE
+                -A ${{matrix.platform}} -DCMAKE_MODULE_PATH=%CD:\=/% \
+                -DENABLE_TESTS=True $GITHUB_WORKSPACE
 
-      - name: Build
+      - name: CMake Build
         working-directory: ${{runner.workspace}}/build
         run: cmake --build . --config ${{matrix.build_type}}
 
