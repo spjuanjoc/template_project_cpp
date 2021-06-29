@@ -10,7 +10,8 @@
 
 using namespace Greet;
 
-void Foo::greetFromPlatform() const
+void Foo::setPlatform()
 {
-  fmt::print("Hello foo: {} from Linux\n", m_value);
+  m_platform = "Linux";
 }
+

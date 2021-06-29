@@ -12,9 +12,20 @@ using namespace Greet;
 
 Foo::Foo(int value) : m_value(value)
 {
+  setPlatform();
 }
 
 void Foo::greet() const
 {
   fmt::print("Hello foo: {}\n", m_value);
+}
+
+void Foo::greetFromPlatform() const
+{
+  fmt::print("Hello foo: {} from {}\n", m_value, getPlatform());
+}
+
+std::string_view Foo::getPlatform() const
+{
+  return m_platform;
 }

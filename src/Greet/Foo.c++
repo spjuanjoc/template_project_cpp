@@ -3,7 +3,6 @@
  *
  * @author  juan.castellanos
  * @date    2021-06-24
- *
  */
 
 #include "Greet/Foo.h"
@@ -11,7 +10,7 @@
 
 using namespace Greet;
 
-void Foo::greetFromPlatform() const
+void Foo::setPlatform()
 {
-  fmt::print("Hello foo: {} from OSX\n", m_value);
+  m_platform = "OSX";
 }

@@ -15,11 +15,15 @@
  * Use of this software is subject to the terms of an end user license
  * agreement.
  */
+
 #ifndef FOO_H_
 #define FOO_H_
 
+#include <string_view>
+
 namespace Greet
 {
+
 class Foo
 {
 public:
@@ -31,9 +35,15 @@ public:
 
   void greetFromPlatform() const;
 
+  void setPlatform();
+
+  std::string_view getPlatform() const;
+
 private:
-  int m_value;
+  int m_value{};
+  std::string_view m_platform;
 };
+
 }  // namespace Greet
 
-#endif  //FOO_H_
+#endif  /* FOO_H_ */
