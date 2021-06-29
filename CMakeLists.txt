@@ -12,7 +12,6 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Windows") # .cxx .hxx
   set(PLATFORM_EXTENSION cxx)
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin") # OSX .c++ .h++
   set(PLATFORM_EXTENSION c++)
-  set(CMAKE_MACOSX_RPATH OFF)
 endif ()
 
 file(GLOB_RECURSE
@@ -22,7 +21,7 @@ file(GLOB_RECURSE
     src/*.${PLATFORM_EXTENSION}
 )
 
-add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
+add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 
 
 ## Compiler options
@@ -31,7 +30,6 @@ set_project_options(${PROJECT_NAME})
 
 
 ## Setup Conan
-# conan_cmake_run [see](https://github.com/selassje/eyeTracker/blob/master/CMakeLists.txt)
 if (NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
   message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
   file(DOWNLOAD
@@ -80,7 +78,13 @@ endif ()
 
 
 ## Install commands
-install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION "/opt/${PROJECT_NAME}")
+install(TARGETS ${PROJECT_NAME}
+    RUNTIME DESTINATION "/opt/${PROJECT_NAME}/bin"
+    LIBRARY DESTINATION "/opt/${PROJECT_NAME}/lib"
+    ARCHIVE DESTINATION "/opt/${PROJECT_NAME}/lib"
+    PRIVATE_HEADER DESTINATION "/opt/${PROJECT_NAME}/include"
+    PUBLIC_HEADER DESTINATION "/opt/${PROJECT_NAME}/include"
+    )
 
 set(CPACK_GENERATOR "DEB")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Juan Jose Castellanos <juancho.312@hotmail.com>")
