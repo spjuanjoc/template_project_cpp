@@ -10,6 +10,10 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux") # .cc .hh
   set(PLATFORM_EXTENSION cc)
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Windows") # .cxx .hxx
   set(PLATFORM_EXTENSION cxx)
+  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS True) # Allow DLL symbols generation
+  set(BUILD_SHARED_LIBS True)
+  message(STATUS "Parent export all symbols: ${CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS}")
+  message(STATUS "Parent Build shared libs: ${BUILD_SHARED_LIBS}")
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin") # OSX .c++ .h++
   set(PLATFORM_EXTENSION c++)
 endif ()
