@@ -55,26 +55,26 @@ function(set_project_options project_options_target_name)
       -Wuseless-cast            # warn if you perform a cast to the same type
       )
 
-  if(ENABLE_WERROR)
+  if (ENABLE_WERROR)
     set(CLANG_OPTIONS ${CLANG_OPTIONS}  -Werror)
     set(GCC_OPTIONS   ${GCC_OPTIONS}    -Werror)
     set(MSVC_OPTIONS  ${MSVC_OPTIONS}   /WX)
-  endif()
+  endif ()
 
-  if(MSVC)
+  if (MSVC)
     set(PROJECT_OPTIONS ${MSVC_OPTIONS})
-  elseif(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
+  elseif (CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
     set(PROJECT_OPTIONS ${CLANG_OPTIONS})
-  elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set(PROJECT_OPTIONS ${GCC_OPTIONS})
     target_link_libraries(${project_options_target_name} PRIVATE pthread)
-    if(ENABLE_COVERAGE)
+    if (ENABLE_COVERAGE)
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage" PARENT_SCOPE) # PARENT_SCOPE required since this is called from a function
       message(STATUS "coverage enabled: ${CMAKE_CXX_FLAGS}")
-    endif()
-  else()
+    endif ()
+  else ()
     message(AUTHOR_WARNING "No compiler warnings set for '${CMAKE_CXX_COMPILER_ID}' compiler.")
-  endif()
+  endif ()
 
   target_compile_options(${project_options_target_name} PRIVATE ${PROJECT_OPTIONS}) # for header-only use INTERFACE
 
