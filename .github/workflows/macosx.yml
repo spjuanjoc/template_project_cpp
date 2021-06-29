@@ -33,7 +33,8 @@ jobs:
         run: |
           cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
                 -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True \
-                -DENABLE_COVERAGE=False $GITHUB_WORKSPACE
+                -DENABLE_COVERAGE=False -DCMAKE_MACOSX_RPATH=False \
+                $GITHUB_WORKSPACE
 
       - name: CMake Build
         working-directory: ${{runner.workspace}}/build
