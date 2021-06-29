@@ -11,13 +11,13 @@
 
 using namespace Greet;
 
-int main()
-{
-  fmt::print("Hello, World!\n");
-  auto foo = std::make_unique<Foo>(42);
-
-  foo->greet();
-  foo->greetFromPlatform();
-
-  return 0;
-}
+//int main()
+//{
+//  fmt::print("Hello, World!\n");
+//  auto foo = std::make_unique<Foo>(42);
+//
+//  foo->greet();
+//  foo->greetFromPlatform();
+//
+//  return 0;
+//}
