@@ -26,6 +26,6 @@ find_package(Catch2 REQUIRED)
 
 
 ## Target
-target_link_libraries(${TEST_NAME} PRIVATE fmt::fmt)
+target_link_libraries(${TEST_NAME} PRIVATE fmt::fmt ${PROJECT_NAME})
 target_compile_features(${TEST_NAME} PUBLIC cxx_std_17)
 target_include_directories(${TEST_NAME} PRIVATE ${Catch2_INCLUDE_DIRS} ../include)

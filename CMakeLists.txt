@@ -21,7 +21,8 @@ file(GLOB_RECURSE
     src/*.${PLATFORM_EXTENSION}
 )
 
-add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+#add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 
 
 ## Compiler options
