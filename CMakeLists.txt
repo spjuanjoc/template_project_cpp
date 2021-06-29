@@ -12,7 +12,7 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Windows") # .cxx .hxx
   set(PLATFORM_EXTENSION cxx)
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin") # OSX .c++ .h++
   set(PLATFORM_EXTENSION c++)
-  set(CMAKE_SHARED_LIBRARY_SUFFIX .dylib)
+  set(CMAKE_MACOSX_RPATH OFF)
 endif ()
 
 file(GLOB_RECURSE
@@ -22,8 +22,7 @@ file(GLOB_RECURSE
     src/*.${PLATFORM_EXTENSION}
 )
 
-#add_executable(${PROJECT_NAME} ${SOURCE_FILES})
-add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
+add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 
 
 ## Compiler options
