@@ -40,7 +40,8 @@ jobs:
           echo "PATH: ${PATH}"
           cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
                 -A ${{matrix.platform}} -DCMAKE_MODULE_PATH=%CD:\=/% \
-                -DENABLE_TESTS=True $GITHUB_WORKSPACE
+                -DENABLE_TESTS=True -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=True \
+                -DBUILD_SHARED_LIBS=True $GITHUB_WORKSPACE
 
       - name: CMake Build
         working-directory: ${{runner.workspace}}/build
