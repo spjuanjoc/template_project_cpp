@@ -63,6 +63,8 @@ function(set_project_options project_options_target_name)
 
   if (MSVC)
     set(PROJECT_OPTIONS ${MSVC_OPTIONS})
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS True)
+    set(BUILD_SHARED_LIBS True)
   elseif (CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
     set(PROJECT_OPTIONS ${CLANG_OPTIONS})
   elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
