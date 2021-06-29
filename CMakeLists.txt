@@ -12,6 +12,7 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Windows") # .cxx .hxx
   set(PLATFORM_EXTENSION cxx)
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin") # OSX .c++ .h++
   set(PLATFORM_EXTENSION c++)
+  set(CMAKE_SHARED_LIBRARY_SUFFIX .dylib)
 endif ()
 
 file(GLOB_RECURSE
