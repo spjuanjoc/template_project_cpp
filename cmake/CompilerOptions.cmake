@@ -70,6 +70,7 @@ function(set_project_options project_options_target_name)
   elseif (CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
     set(PROJECT_OPTIONS ${CLANG_OPTIONS})
     set(CMAKE_MACOSX_RPATH False PARENT_SCOPE) # Disable rpath for dylib
+    message(STATUS "OSX disable rpath: ${CMAKE_MACOSX_RPATH}")
   elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set(PROJECT_OPTIONS ${GCC_OPTIONS})
     target_link_libraries(${project_options_target_name} PRIVATE pthread)
