@@ -83,13 +83,30 @@ endif ()
 
 ## Install commands
 install(TARGETS ${PROJECT_NAME}
-    RUNTIME DESTINATION "/opt/${PROJECT_NAME}/bin"
-    LIBRARY DESTINATION "/opt/${PROJECT_NAME}/lib"
-    ARCHIVE DESTINATION "/opt/${PROJECT_NAME}/lib"
-    PRIVATE_HEADER DESTINATION "/opt/${PROJECT_NAME}/include"
-    PUBLIC_HEADER DESTINATION "/opt/${PROJECT_NAME}/include"
-    )
+  EXPORT ${PROJECT_NAME}
+  CONFIGURATIONS ${CMAKE_BUILD_TYPE}
+  LIBRARY         DESTINATION "/opt/${PROJECT_NAME}/${CMAKE_BUILD_TYPE}/lib"
+  ARCHIVE         DESTINATION "/opt/${PROJECT_NAME}/${CMAKE_BUILD_TYPE}/lib"
+  RUNTIME         DESTINATION "/opt/${PROJECT_NAME}/${CMAKE_BUILD_TYPE}/bin"
+  PRIVATE_HEADER  DESTINATION "/opt/${PROJECT_NAME}/${CMAKE_BUILD_TYPE}/include"
+  PUBLIC_HEADER   DESTINATION "/opt/${PROJECT_NAME}/${CMAKE_BUILD_TYPE}/include"
+)
 
+## Create .cmake
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+  Find${PROJECT_NAME}.cmake
+  VERSION ${PACKAGE_VERSION}
+  COMPATIBILITY AnyNewerVersion
+)
+
+install(EXPORT ${PROJECT_NAME}
+  FILE Find${PROJECT_NAME}.cmake
+  NAMESPACE
+  DESTINATION "/opt/${PROJECT_NAME}/${CMAKE_BUILD_TYPE}/lib/cmake"
+)
+
+include(CPack)
 set(CPACK_GENERATOR "DEB")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Juan Jose Castellanos <juancho.312@hotmail.com>")
-include(CPack)
+set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE)
