@@ -1,26 +1,34 @@
 image:
   - Visual Studio 2019
 
+platform:
+  - x64
+
+configuration:
+  - Debug
+
 clone_folder: c:\projects\source
 
 install:
   - choco install conan --params="'/AddToPath:1'"
 
 before_build:
-- cmd: RefreshEnv.cmd
-- conan profile list
-- conan profile new default --detect
-- conan profile show default
-- mkdir build
-- cd build
-- conan install .. -s build_type=Debug
+  - cmd: RefreshEnv.cmd
+  - conan profile list
+  - conan profile new default --detect
+  - conan profile show default
+  - mkdir build
+  - cd build
+  - conan install .. -s build_type=Debug
 
 build_script:
-- cmd: >-
-    cmake -DCMAKE_MODULE_PATH=%CD:\=/% -DENABLE_TESTS=True c:\projects\source
+  - cmd: >-
+      cmake -DCMAKE_MODULE_PATH=%CD:\=/% -DENABLE_TESTS=True c:\projects\source
 
-    cmake --build .
+      cmake --build .
 
 test_script:
-- cmd: template_project_cpp_AllTests.exe
-- cmd: ctest -C Debug
+  - C:\projects\source\build\test\Debug\template_project_cpp_AllTests.exe
+
+on_failure:
+  - cmd: ctest -VV -C Debug

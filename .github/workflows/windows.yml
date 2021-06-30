@@ -47,9 +47,9 @@ jobs:
         working-directory: ${{runner.workspace}}/build
         run: cmake --build . --config ${{matrix.build_type}}
 
-      - name: Test
-        working-directory: ${{runner.workspace}}/build
-        run: ${{runner.workspace}}/build/test/Debug/template_project_cpp_AllTests.exe
+#      - name: Test
+#        working-directory: ${{runner.workspace}}/build
+#        run: ${{runner.workspace}}/build/test/Debug/template_project_cpp_AllTests.exe
 
       - name: CTest
         working-directory: ${{runner.workspace}}/build
