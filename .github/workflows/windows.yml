@@ -9,7 +9,7 @@ jobs:
       matrix:
         os: [windows-2019]
         platform: [x64]
-        build_type: [Debug]
+        build_type: [Debug, Release]
         standard: [17]
 
     steps:
@@ -31,7 +31,7 @@ jobs:
       - name: Install third-party packages
         shell: bash
         working-directory: ${{runner.workspace}}/build
-        run: conan install $GITHUB_WORKSPACE/conanfile.txt -s build_type=Debug --build missing
+        run: conan install $GITHUB_WORKSPACE/conanfile.txt -s build_type=${{matrix.build_type}} --build missing
 
       - name: CMake Configure
         shell: bash
@@ -48,24 +48,17 @@ jobs:
         run: |
           cmake --build . --config ${{matrix.build_type}}
 
-#      - name: Add DLL to path
-#        shell: cmd
-#        working-directory: ${{runner.workspace}}/build
-#        run: |
-#          echo "%runner.workspace%/build" >> %PATH%
-#          echo "%runner.workspace%/build" >> %GITHUB_PATH%
-#          echo "PATH = %PATH%"
-#          echo "GITHUB_PATH = %GITHUB_PATH%"
-
       - name: Check symbols
         working-directory: ${{runner.workspace}}/build
-        run: ldd ${{runner.workspace}}/build/test/Debug/template_project_cpp_AllTests.exe
+        run: |
+          ldd ${{runner.workspace}}/build/test/${{matrix.build_type}}/template_project_cpp_AllTests.exe
+          ldd ${{runner.workspace}}/build/${{matrix.build_type}}/template_project_cpp.dll
 
-      - name: Copy dll
+      - name: Copy DLL
         shell: cmd
         working-directory: ${{runner.workspace}}/build
-        run: copy ${{runner.workspace}}\build\Debug\*.dll ${{runner.workspace}}\build\test\Debug
+        run: copy ${{runner.workspace}}\build\${{matrix.build_type}}\*.dll ${{runner.workspace}}\build\test\${{matrix.build_type}}
 
-      - name: CTest
+      - name: Run CTest
         working-directory: ${{runner.workspace}}/build
         run: ctest -VV -C ${{matrix.build_type}} --output-on-failure
