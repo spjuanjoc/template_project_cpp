@@ -61,6 +61,11 @@ jobs:
         working-directory: ${{runner.workspace}}/build
         run: ldd ${{runner.workspace}}/build/test/Debug/template_project_cpp_AllTests.exe
 
+      - name: Copy dll
+        shell: cmd
+        working-directory: ${{runner.workspace}}/build
+        run: copy ${{runner.workspace}}/build/*.dll ${{runner.workspace}}/build/test/Debug/
+
       - name: CTest
         working-directory: ${{runner.workspace}}/build
         run: ctest -VV -C ${{matrix.build_type}} --output-on-failure

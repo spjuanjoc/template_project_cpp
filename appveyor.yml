@@ -30,6 +30,7 @@ build_script:
 before_test:
   - ldd C:\projects\source\build\test\Debug\template_project_cpp_AllTests.exe
   - cmd: set PATH=%PATH%;C:\projects\source\build\
+  - copy C:\projects\source\build\Debug\template_project_cpp.dll C:\projects\source\build\test\Debug\
 
 test_script:
   - C:\projects\source\build\test\Debug\template_project_cpp_AllTests.exe
