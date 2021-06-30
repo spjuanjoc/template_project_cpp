@@ -33,7 +33,13 @@ before_test:
   - cmd: echo "%PATH%"
 
 test_script:
+  - cmd: echo "%PATH%"
+  - cmd: set PATH=%PATH%;C:\projects\source\build\
+  - cmd: echo "%PATH%"
   - C:\projects\source\build\test\Debug\template_project_cpp_AllTests.exe
 
 on_failure:
+  - cmd: echo "%PATH%"
+  - cmd: set PATH=%PATH%;C:\projects\source\build\
+  - cmd: echo "%PATH%"
   - cmd: ctest -VV -C Debug

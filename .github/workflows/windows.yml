@@ -45,7 +45,9 @@ jobs:
 
       - name: CMake Build
         working-directory: ${{runner.workspace}}/build
-        run: cmake --build . --config ${{matrix.build_type}}
+        run: |
+          cmake --build . --config ${{matrix.build_type}}
+          ctest -VV -C ${{matrix.build_type}} --output-on-failure
 
       - name: Add DLL to path
         shell: cmd
