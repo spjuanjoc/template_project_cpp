@@ -48,8 +48,8 @@ jobs:
         run: cmake --build . --config ${{matrix.build_type}}
 
       - name: Test
-        working-directory: ${{runner.workspace}}/build/test/Debug
-        run: template_project_cpp_AllTests.exe
+        working-directory: ${{runner.workspace}}/build
+        run: ${{runner.workspace}}/build/test/Debug/template_project_cpp_AllTests.exe
 
       - name: CTest
         working-directory: ${{runner.workspace}}/build

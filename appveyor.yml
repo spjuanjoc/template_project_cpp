@@ -22,4 +22,5 @@ build_script:
     cmake --build .
 
 test_script:
+- cmd: template_project_cpp_AllTests.exe
 - cmd: ctest -C Debug
