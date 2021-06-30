@@ -29,7 +29,8 @@ build_script:
 
 before_test:
   - ldd C:\projects\source\build\test\Debug\template_project_cpp_AllTests.exe
-  - export PATH=$PATH:C:\projects\source\build\
+  - cmd: set PATH=$PATH:C:\projects\source\build\
+  - cmd: RefreshEnv.cmd
 
 test_script:
   - C:\projects\source\build\test\Debug\template_project_cpp_AllTests.exe

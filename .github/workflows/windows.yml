@@ -48,6 +48,7 @@ jobs:
         run: cmake --build . --config ${{matrix.build_type}}
 
       - name: Add DLL to path
+        shell: bash
         working-directory: ${{runner.workspace}}/build
         run: |
           echo "${{runner.workspace}}/build" >> $PATH
