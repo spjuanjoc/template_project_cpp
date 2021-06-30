@@ -67,6 +67,11 @@ function(set_project_options project_options_target_name)
     set(BUILD_SHARED_LIBS True PARENT_SCOPE)
     message(STATUS "Windows export all symbols: ${CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS}")
     message(STATUS "Windows Build shared libs: ${BUILD_SHARED_LIBS}")
+    target_compile_definitions(${project_options_target_name}
+        PUBLIC
+          CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=True
+          BUILD_SHARED_LIBS=True
+        )
   elseif (CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
     set(PROJECT_OPTIONS ${CLANG_OPTIONS})
     set(CMAKE_MACOSX_RPATH False PARENT_SCOPE) # Disable rpath for dylib
