@@ -3,10 +3,10 @@
 This is a base CMake project with the basic configuration to build a
 cross-platform c++ application for Linux, OSX, and Windows x64. Triggers the CI
 to build and run the tests, and run coverage. Uses conan to install
-dependencies, Catch2 for testing, and fmt. Format with clang-format
+dependencies: Catch2 for testing, and fmt. Format with clang-format
 
 | System | App       |Status|
-|  ---   |  ---      |:---:|
+|  ---   |  ---      | ---:|
 |Linux   | GH Actions| [![linux](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/linux.yml/badge.svg?branch=main)](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/linux.yml) |
 |OSX     | GH Actions| [![macos](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/macosx.yml/badge.svg)](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/macosx.yml) |
 |Win x64 | GH Actions| [![windows](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/windows.yml/badge.svg)](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/windows.yml) |
