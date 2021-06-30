@@ -64,7 +64,7 @@ jobs:
       - name: Copy dll
         shell: cmd
         working-directory: ${{runner.workspace}}/build
-        run: copy ${{runner.workspace}}/build/*.dll ${{runner.workspace}}/build/test/Debug/
+        run: copy ${{runner.workspace}}\build\*.dll ${{runner.workspace}}\build\test\Debug
 
       - name: CTest
         working-directory: ${{runner.workspace}}/build
