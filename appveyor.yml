@@ -27,6 +27,10 @@ build_script:
 
       cmake --build .
 
+before_test:
+  - ldd C:\projects\source\build\test\Debug\template_project_cpp_AllTests.exe
+  - export PATH=$PATH:C:\projects\source\build\
+
 test_script:
   - C:\projects\source\build\test\Debug\template_project_cpp_AllTests.exe
 
