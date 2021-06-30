@@ -9,9 +9,12 @@ file(GLOB_RECURSE
 
 add_executable(${TEST_NAME} ${TEST_SOURCES})
 add_test(NAME ${TEST_NAME} # for ctest
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMAND ${TEST_NAME} -d yes --order lex
     )
+message("** tests working directory: ${CMAKE_CURRENT_BINARY_DIR}")
+message("** project working directory: ${CMAKE_BINARY_DIR}")
+message("** runtime directory: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
 
 
 ## Compiler options

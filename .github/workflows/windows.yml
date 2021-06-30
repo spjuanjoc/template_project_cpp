@@ -47,16 +47,15 @@ jobs:
         working-directory: ${{runner.workspace}}/build
         run: |
           cmake --build . --config ${{matrix.build_type}}
-          ctest -VV -C ${{matrix.build_type}} --output-on-failure
 
-      - name: Add DLL to path
-        shell: cmd
-        working-directory: ${{runner.workspace}}/build
-        run: |
-          echo "%runner.workspace%/build" >> %PATH%
-          echo "%runner.workspace%/build" >> %GITHUB_PATH%
-          echo "PATH = %PATH%"
-          echo "GITHUB_PATH = %GITHUB_PATH%"
+#      - name: Add DLL to path
+#        shell: cmd
+#        working-directory: ${{runner.workspace}}/build
+#        run: |
+#          echo "%runner.workspace%/build" >> %PATH%
+#          echo "%runner.workspace%/build" >> %GITHUB_PATH%
+#          echo "PATH = %PATH%"
+#          echo "GITHUB_PATH = %GITHUB_PATH%"
 
       - name: Check symbols
         working-directory: ${{runner.workspace}}/build
