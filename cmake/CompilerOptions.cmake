@@ -2,8 +2,6 @@
 #
 
 function(set_project_options project_options_target_name)
-  option(ENABLE_COVERAGE  "Enable gcov coverage"                      False)
-  option(ENABLE_WERROR    "Enable treat compiler warnings as errors"  False)
 
   set(MSVC_OPTIONS
       /W4           # Baseline reasonable warnings
@@ -55,7 +53,7 @@ function(set_project_options project_options_target_name)
       -Wuseless-cast            # warn if you perform a cast to the same type
       )
 
-  if (ENABLE_WERROR)
+  if (ENABLE_WARN_AS_ERR)
     set(CLANG_OPTIONS ${CLANG_OPTIONS}  -Werror)
     set(GCC_OPTIONS   ${GCC_OPTIONS}    -Werror)
     set(MSVC_OPTIONS  ${MSVC_OPTIONS}   /WX)

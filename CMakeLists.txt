@@ -1,11 +1,19 @@
 cmake_minimum_required(VERSION 3.12)
-project(template_project_cpp VERSION 0.1.1 LANGUAGES CXX)
 
-option(ENABLE_PCH   "Enable Precompiled Headers"  False)
-option(ENABLE_TESTS "Enable tests"                False)
+project(template_project_cpp
+  VERSION "0.1.2"
+  DESCRIPTION "A cross-platform c++ application template"
+  LANGUAGES CXX
+)
 
 
-## Sources common for all platforms .cpp .hpp
+## Options
+option(ENABLE_COVERAGE    "Enable gcov coverage"              False)
+option(ENABLE_PCH         "Enable Precompiled Headers"        False)
+option(ENABLE_TESTS       "Enable tests"                      False)
+option(ENABLE_WARN_AS_ERR "Treat compiler warnings as errors" False)
+
+## Source files common for all platforms .cpp .hpp
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux") # .cc .hh
   set(PLATFORM_EXTENSION cc)
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Windows") # .cxx .hxx
@@ -37,13 +45,19 @@ set_project_options(${PROJECT_NAME})
 if (NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
   message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
   file(DOWNLOAD
-      "https://raw.githubusercontent.com/conan-io/cmake-conan/master/conan.cmake"
-      "${CMAKE_BINARY_DIR}/conan.cmake"
-      )
+    "https://raw.githubusercontent.com/conan-io/cmake-conan/master/conan.cmake"
+    "${CMAKE_BINARY_DIR}/conan.cmake"
+  )
 endif ()
 
 include(${CMAKE_BINARY_DIR}/conan.cmake)
-conan_cmake_run(CONANFILE conanfile.txt BASIC_SETUP NO_OUTPUT_DIRS)
+conan_cmake_autodetect(settings)
+conan_check(REQUIRED)
+conan_cmake_run(CONANFILE conanfile.txt
+  BASIC_SETUP NO_OUTPUT_DIRS
+  BUILD missing
+  SETTINGS ${settings}
+)
 
 
 ## Find third-party packages
@@ -52,9 +66,9 @@ find_package(fmt REQUIRED)
 
 
 ## Target
-target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
-target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
+target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
 #target_sources(${PROJECT_NAME} ${SOURCES})
 
 

@@ -1,14 +1,15 @@
 ---
-Checks: '*,
-  -altera-struct-pack-align,
+Checks:
+  '*,
+  -abseil-*,
+  -altera-*,
   -fuchsia-*,
   -google-*,
-  -zircon-*,
-  -abseil-*,
-  -modernize-use-trailing-return-type,
-  -modernize-use-nodiscard,
   -llvm-*,
-  -llvmlibc-*'
+  -llvmlibc-*,
+  -modernize-use-trailing-return-type,
+  -modernize-use-override,
+  -zircon-*'
 WarningsAsErrors: '*'
 HeaderFilterRegex: ''
 FormatStyle:     none

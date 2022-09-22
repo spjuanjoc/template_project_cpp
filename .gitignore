@@ -32,11 +32,16 @@
 *.app
 *.bin
 
+
 # Build folders
 *cmake-build-*
 CMakeFiles/
 Makefile/
 build/
+
+
+# cmake files
+*.cmake
 
 # DEB packages
 *.deb
