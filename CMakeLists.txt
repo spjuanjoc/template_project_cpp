@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
 project(template_project_cpp
-  VERSION "0.1.2"
+  VERSION "0.1.3"
   DESCRIPTION "A cross-platform c++ application template"
   LANGUAGES CXX
 )
@@ -11,7 +11,8 @@ project(template_project_cpp
 option(ENABLE_COVERAGE    "Enable gcov coverage"              False)
 option(ENABLE_PCH         "Enable Precompiled Headers"        False)
 option(ENABLE_TESTS       "Enable tests"                      False)
-option(ENABLE_WARN_AS_ERR "Treat compiler warnings as errors" False)
+option(ENABLE_WERROR      "Treat compiler warnings as errors" False)
+
 
 ## Source files common for all platforms .cpp .hpp
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux") # .cc .hh
@@ -38,7 +39,7 @@ add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 
 ## Compiler options
 include(cmake/CompilerOptions.cmake)
-set_project_options(${PROJECT_NAME})
+set_compiler_options(${PROJECT_NAME})
 
 
 ## Setup Conan

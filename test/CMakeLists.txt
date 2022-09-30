@@ -19,7 +19,7 @@ message("** runtime directory: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
 
 ## Compiler options
 include(../cmake/CompilerOptions.cmake)
-set_project_options(${TEST_NAME})
+set_compiler_options(${TEST_NAME})
 
 
 ## Find third-party packages
