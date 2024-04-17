@@ -9,18 +9,19 @@ jobs:
       matrix:
         os: [windows-2019]
         platform: [x64]
-        build_type: [Debug, Release]
-        standard: [17]
+        build_type: [Release]
+        standard: [20]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - run: choco install -y conan --params="'/AddToPath:1'"
+      - run: choco install -y conan --version 1.62.0 --params="'/AddToPath:1'"
       - name: Install and configure Conan
         shell: cmd
         run: |
           call refreshenv
           conan profile new default --detect
+          conan profile update conf.tools.system.package_manager:mode=install default
           conan profile show default
           echo "%PATH%" >> %GITHUB_PATH%
           echo "PATH = %PATH%"
