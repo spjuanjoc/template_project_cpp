@@ -63,11 +63,11 @@ conan_cmake_run(CONANFILE conanfile.txt
 
 ## Find third-party packages
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_BINARY_DIR})
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${CMAKE_BINARY_DIR})
 find_package(fmt REQUIRED)
 
 
 ## Target
-target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
 #target_sources(${PROJECT_NAME} ${SOURCES})
