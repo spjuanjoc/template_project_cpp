@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
 project(template_project_cpp
-  VERSION "0.1.3"
+  VERSION "1.0.0"
   DESCRIPTION "A cross-platform c++ application template"
   LANGUAGES CXX
 )

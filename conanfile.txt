@@ -1,6 +1,6 @@
 [requires]
-  fmt/9.0.0
-  catch2/2.13.6
+  catch2/3.5.4
+  fmt/10.0.0
 
 [generators]
   cmake_find_package

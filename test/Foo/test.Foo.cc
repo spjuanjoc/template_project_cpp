@@ -5,9 +5,13 @@
  * @date    2021-06-28
  */
 
-#include "Greet/Foo.h"
-#include <catch2/catch.hpp>
 #include <fmt/core.h>
+
+#include "Greet/Foo.h"
+
+#include <memory>
+
+#include <catch2/catch_test_macros.hpp>
 
 using namespace Greet;
 
