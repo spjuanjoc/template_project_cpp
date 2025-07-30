@@ -22,27 +22,19 @@ dependencies: Catch2 for testing, and fmt. Format with clang-format
 
 ## Requirements
 
-- CMake > 3.12
+- CMake > 3.24
 - A C++20 compliant compiler
 
 
 ## Build
 
-1. Build in debug mode with tests:
+Build in debug mode with tests:
 
-    ```shell
-    mkdir build && cd build
-    cmake -DCMAKE_MODULE_PATH=$PWD -DCMAKE_BUILD_TYPE=Debug -DENABLE_TESTS=True ..
-    cmake --build . --config Debug 
-    ```
-
-2. Build with ninja:
-    
-    ```shell
-    mkdir build && cd build
-    cmake -DCMAKE_MODULE_PATH=$PWD -DCMAKE_BUILD_TYPE=Release -G "Ninja" ..
-    cmake --build . --config Release
-    ```
+```shell
+mkdir build && cd build
+cmake .. -DENABLE_TESTS=True -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES=/path/to/cmake/conan_provider.cmake -DCMAKE_BUILD_TYPE=Debug
+cmake --build .
+```
 
 
 ## Run tests
