@@ -1,23 +1,13 @@
 /**
  * @brief   Declares the class Foo.
  *
- * @author  juan.castellanos
+ * @author  spjuanjoc
  * @date    2021-06-24
  *
- * @copyright 2021 Smartmatic Corp. All Rights Reserved.
- *
- * @section LICENSE
- *
- * Confidential Information of Smartmatic Labs. Not for disclosure or
- * distribution prior written consent. This software contains code, techniques
- * and know-how which is confidential and proprietary to Smartmatic.
- *
- * Use of this software is subject to the terms of an end user license
- * agreement.
  */
 
-#ifndef FOO_H_
-#define FOO_H_
+#ifndef FOO_H
+#define FOO_H
 
 #include <string_view>
 
@@ -40,10 +30,10 @@ public:
   std::string_view getPlatform() const;
 
 private:
-  int m_value{};
+  int              m_value {};
   std::string_view m_platform;
 };
 
 }  // namespace Greet
 
-#endif  /* FOO_H_ */
+#endif /* FOO_H */

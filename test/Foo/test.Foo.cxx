@@ -1,13 +1,13 @@
 /**
  * @brief   Implements the tests for Windows.
  *
- * @author  juan.castellanos
+ * @author  spjuanjoc
  * @date    2021-06-28
  */
 
-#include <fmt/core.h>
-
 #include "Greet/Foo.h"
+
+#include <fmt/core.h>
 
 #include <memory>
 
