@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.24)
 
 project(template_project_cpp
-  VERSION "1.0.0"
+  VERSION "1.0.1"
   DESCRIPTION "A cross-platform c++ application template"
   LANGUAGES CXX
 )
@@ -42,35 +42,13 @@ include(cmake/CompilerOptions.cmake)
 set_compiler_options(${PROJECT_NAME})
 
 
-## Setup Conan
-if (NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
-  message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
-  file(DOWNLOAD
-    "https://raw.githubusercontent.com/conan-io/cmake-conan/master/conan.cmake"
-    "${CMAKE_BINARY_DIR}/conan.cmake"
-  )
-endif ()
-
-include(${CMAKE_BINARY_DIR}/conan.cmake)
-conan_cmake_autodetect(settings)
-conan_check(REQUIRED)
-conan_cmake_run(CONANFILE conanfile.txt
-  BASIC_SETUP NO_OUTPUT_DIRS
-  BUILD missing
-  SETTINGS ${settings}
-)
-
-
 ## Find third-party packages
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_BINARY_DIR})
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${CMAKE_BINARY_DIR})
 find_package(fmt REQUIRED)
 
 
 ## Target
 target_include_directories(${PROJECT_NAME} PRIVATE include)
-target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
-#target_sources(${PROJECT_NAME} ${SOURCES})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${fmt_LIBRARIES})
 
 
 ## Check custom options

@@ -1,6 +1,9 @@
 [requires]
-  catch2/3.5.4
-  fmt/10.0.0
+  catch2/3.8.1
+  fmt/11.2.0
 
 [generators]
-  cmake_find_package
+  CMakeDeps
+
+[layout]
+  cmake_layout

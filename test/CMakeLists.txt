@@ -22,25 +22,21 @@ set_compiler_options(${TEST_NAME})
 
 
 ## Find third-party packages
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_BINARY_DIR})
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${CMAKE_BINARY_DIR})
 find_package(Catch2 REQUIRED)
 find_package(fmt REQUIRED)
 
 
-message(STATUS "catch2_LIBRARIES: ${catch2_LIBRARIES}")
-
 ## Target
+target_include_directories(${TEST_NAME}
+  PRIVATE SYSTEM
+    ${catch2_INCLUDE_DIRS}
+  PRIVATE
+    ../include
+)
+
 target_link_libraries(${TEST_NAME}
   PRIVATE
     ${PROJECT_NAME}
-    ${catch2_LIBRARIES}
+    ${Catch2_LIBRARIES}
     ${fmt_LIBRARIES}
-)
-
-target_include_directories(${TEST_NAME}
-  PRIVATE
-    ../include
-  PRIVATE SYSTEM
-    ${catch2_INCLUDE_DIRS}
 )

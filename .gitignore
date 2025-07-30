@@ -40,9 +40,6 @@ Makefile/
 build/
 
 
-# cmake files
-*.cmake
-
 # DEB packages
 *.deb
 
