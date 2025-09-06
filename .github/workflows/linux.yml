@@ -18,7 +18,7 @@ jobs:
 
       - name: Install python virtual environment
         run: |
-          apt install python3-venv -y
+          sudo apt install python3-venv -y
           python3 -m venv $HOME/.venv
 
       - name: Activate python virtual environment
@@ -35,8 +35,8 @@ jobs:
 
       - name: Install packages
         run: |
-          apt update
-          apt install cmake ninja-build python3-pip -y
+          sudo apt update
+          sudo apt install cmake ninja-build python3-pip -y
           pip3 install --upgrade pip
           pip3 install coverage
 
