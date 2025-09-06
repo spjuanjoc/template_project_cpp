@@ -7,27 +7,38 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        cxx: [g++-10]
+        cxx: [g++]
         build_type: [Debug]
-        std: [20]
-        os: [ubuntu-20.04]
+        std: [23]
+        os: [ubuntu-24.04]
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Install coverage
+      - name: Install python virtual environment
         run: |
+          apt install python3-venv -y
+          python3 -m venv $HOME/.venv
+
+      - name: Activate python virtual environment
+        run: |
+          source $HOME/.venv/bin/activate
+          export PATH=$HOME/.venv/bin:$PATH
+
+      - name: Setup Conan Client
+        uses: conan-io/setup-conan@v1
+        with:
+          conan_audit_token: ${{ secrets.CONAN_AUDIT_TOKEN }}
+          cache_packages: true
+          use_venv: true
+
+      - name: Install packages
+        run: |
+          apt update
+          apt install cmake ninja-build python3-pip -y
           pip3 install --upgrade pip
           pip3 install coverage
-
-      - name: Install and configure Conan
-        run: |
-          pip3 install conan==1.62.0
-          conan profile new default --detect
-          conan profile update settings.compiler.libcxx=libstdc++11 default
-          conan profile update conf.tools.system.package_manager:mode=install default
-          conan profile show default
-          sudo apt-get update
 
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}/build
@@ -36,11 +47,13 @@ jobs:
         working-directory: ${{runner.workspace}}/build
         env:
           CXX: ${{matrix.cxx}}
-#          CXXFLAGS: ${{matrix.cxxflags}}
         run: |
-          cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
-                -DCMAKE_MODULE_PATH=$PWD -DENABLE_TESTS=True \
-                -DENABLE_COVERAGE=True $GITHUB_WORKSPACE
+          cmake -S ${GITHUB_WORKSPACE} \
+                -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES="${GITHUB_WORKSPACE}/cmake/conan_provider.cmake" \
+                -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
+                -DENABLE_TESTS=True \
+                -DENABLE_COVERAGE=True \
+                -G "Ninja"
 
       - name: CMake Build
         working-directory: ${{runner.workspace}}/build
@@ -50,9 +63,9 @@ jobs:
         working-directory: ${{runner.workspace}}/build/
         run: ctest -V -C ${{matrix.build_type}} --output-on-failure
 
-#      - name: Coverage
-#        shell: bash
-#        env:
-#          CODECOV_TOKEN: "7526d1fa-caa6-41f8-9ed0-41982d2504d4"
-#        working-directory: ${{runner.workspace}}/build
-#        run: bash <(curl -s https://codecov.io/bash)
+      - name: Coverage
+        shell: bash
+        env:
+          CODECOV_TOKEN: "7526d1fa-caa6-41f8-9ed0-41982d2504d4"
+        working-directory: ${{runner.workspace}}/build
+        run: bash <(curl -s https://codecov.io/bash)
