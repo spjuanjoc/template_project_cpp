@@ -122,7 +122,7 @@ function(set_compiler_options TARGET_NAME)
     set(COMPILER_OPTIONS ${GCC_OPTIONS})
     if(ENABLE_COVERAGE)
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage" PARENT_SCOPE) # PARENT_SCOPE required since this is called from a function
-      message(STATUS "coverage enabled: ${CMAKE_CXX_FLAGS}")
+      message(STATUS "Coverage flags: ${CMAKE_CXX_FLAGS}")
     endif()
   else()
     message(AUTHOR_WARNING "No compiler warnings set for '${CMAKE_CXX_COMPILER_ID}' compiler.")
