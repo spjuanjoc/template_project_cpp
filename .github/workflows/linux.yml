@@ -13,15 +13,15 @@ jobs:
         os: [ubuntu-24.04]
 
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Install python virtual environment
+      - name: Install Python Virtual Environment
         run: |
           sudo apt-get install python3-venv -y --quiet
           python3 -m venv $HOME/.venv
 
-      - name: Activate python virtual environment
+      - name: Activate Python Virtual Environment
         run: |
           source $HOME/.venv/bin/activate
           export PATH=$HOME/.venv/bin:$PATH
@@ -33,7 +33,7 @@ jobs:
           cache_packages: true
           use_venv: true
 
-      - name: Install packages
+      - name: Install Ubuntu Packages
         run: |
           sudo apt-get update --quiet
           sudo apt-get install cmake ninja-build python3-pip lcov -y --quiet
@@ -43,7 +43,7 @@ jobs:
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}/build
 
-      - name: CMake Configure
+      - name: Run CMake Configure
         working-directory: ${{runner.workspace}}/build
         env:
           CXX: ${{matrix.cxx}}
@@ -55,22 +55,22 @@ jobs:
                 -DENABLE_COVERAGE=True \
                 -G "Ninja"
 
-      - name: CMake Build
+      - name: Run CMake Build
         working-directory: ${{runner.workspace}}/build
         run: cmake --build . --config ${{matrix.build_type}}
 
-      - name: Test
+      - name: Run CTest
         working-directory: ${{runner.workspace}}/build/
         run: ctest --progress --build-config ${{matrix.build_type}} --output-on-failure
 
-      - name: Coverage
+      - name: Create Coverage Report
         working-directory: ${{runner.workspace}}/build/
         run: |
           lcov --capture --directory . --output-file coverage.info
           lcov --remove coverage.info '/usr/*' --output-file coverage.info
           lcov --list coverage.info
 
-      - name: Upload codecov
+      - name: Upload Coverage to codecov
         uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: true
