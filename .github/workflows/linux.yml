@@ -18,7 +18,7 @@ jobs:
 
       - name: Install python virtual environment
         run: |
-          sudo apt install python3-venv -y
+          sudo apt-get install python3-venv -y
           python3 -m venv $HOME/.venv
 
       - name: Activate python virtual environment
@@ -35,8 +35,8 @@ jobs:
 
       - name: Install packages
         run: |
-          sudo apt update
-          sudo apt install cmake ninja-build python3-pip -y
+          sudo apt-get update
+          sudo apt-get install cmake ninja-build python3-pip lcov -y
           pip3 install --upgrade pip
           pip3 install coverage
 
@@ -61,11 +61,28 @@ jobs:
 
       - name: Test
         working-directory: ${{runner.workspace}}/build/
-        run: ctest -V -C ${{matrix.build_type}} --output-on-failure
+        run: ctest --progress --verbose --build-config ${{matrix.build_type}} --output-on-failure
 
       - name: Coverage
-        shell: bash
+        working-directory: ${{runner.workspace}}/build/
+        run: |
+          lcov --capture --directory . --output-file coverage.info
+          lcov --remove coverage.info '/usr/*' --output-file coverage.info
+          lcov --list coverage.info
+
+      - name: Upload codecov
+        uses: codecov/codecov-action@v5
+        with:
+          fail_ci_if_error: true # optional (default = false)
+          files: ${{runner.workspace}}/build/coverage.info
+#          flags: unittests # optional
+#          name: codecov-umbrella # optional
+          verbose: true # optional (default = false)
         env:
-          CODECOV_TOKEN: "7526d1fa-caa6-41f8-9ed0-41982d2504d4"
-        working-directory: ${{runner.workspace}}/build
-        run: bash <(curl -s https://codecov.io/bash)
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+#      - name: Coverage
+#        shell: bash
+#        env:
+#          CODECOV_TOKEN: "7526d1fa-caa6-41f8-9ed0-41982d2504d4"
+#        working-directory: ${{runner.workspace}}/build
+#        run: bash <(curl -s https://codecov.io/bash)
