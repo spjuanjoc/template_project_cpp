@@ -24,9 +24,9 @@ dependencies: Catch2 for testing, and fmt. Format with clang-format
 
 ## Code Coverage
 
-| System   | App        | Status                                                                                                                                                                                         |
-|----------|------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Coverage | codecov    | [![codecov](https://codecov.io/gh/spjuanjoc/template_project_cpp/branch/main/graph/badge.svg)](https://codecov.io/gh/spjuanjoc/template_project_cpp)                                           |
+| System   | App     | Status                                                                                                                                                    |
+|----------|---------|:----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Coverage | codecov | [![codecov](https://codecov.io/gh/spjuanjoc/template_project_cpp/graph/badge.svg?token=1kqHX8L1D6)](https://codecov.io/gh/spjuanjoc/template_project_cpp) |
 
 
 For codecov add public repository: [Codecov Dashboard](https://codecov.io/gh/)
