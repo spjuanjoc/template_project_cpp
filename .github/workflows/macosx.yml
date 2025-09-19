@@ -24,11 +24,6 @@ jobs:
         run: |
           cmake -E make_directory ${{runner.workspace}}/build
 
-      - name: Install third-party packages
-        shell: bash
-        working-directory: ${{runner.workspace}}/build
-        run: conan install $GITHUB_WORKSPACE
-
       - name: Run CMake Configure
         working-directory: ${{runner.workspace}}/build
         env:
