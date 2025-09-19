@@ -11,7 +11,7 @@
 
 using namespace Greet;
 
-Foo::Foo(int value)
+Foo::Foo(const int value)
 : m_value(value)
 {
   setPlatform();

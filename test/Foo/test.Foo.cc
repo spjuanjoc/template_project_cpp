@@ -17,7 +17,7 @@ using namespace Greet;
 
 TEST_CASE("test the execution of foo in Linux", "[foo]")
 {
-  auto foo = std::make_unique<Foo>(42);
+  const auto foo = std::make_unique<Foo>(42);
 
   foo->greetFromPlatform();
   auto platform = foo->getPlatform();
