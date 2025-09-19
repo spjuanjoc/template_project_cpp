@@ -37,8 +37,8 @@ jobs:
         run: |
           sudo apt-get update --quiet
           sudo apt-get install cmake ninja-build python3-pip lcov -y --quiet
-          pip3 install --upgrade pip
-          pip3 install coverage
+          pip3 install --upgrade pip --quiet
+          pip3 install coverage --quiet
 
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}/build
@@ -68,6 +68,7 @@ jobs:
         run: |
           lcov --capture --directory . --output-file coverage.info
           lcov --remove coverage.info '/usr/*' --output-file coverage.info
+          lcov --remove coverage.info '*/.conan2/*' --output-file coverage.info
           lcov --list coverage.info
 
       - name: Upload Coverage to codecov
