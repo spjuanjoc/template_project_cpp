@@ -7,42 +7,45 @@ jobs:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        os: [windows-2019]
+        os: [windows-2022]
         platform: [x64]
         build_type: [Release]
         standard: [20]
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      - run: choco install -y conan --version 1.62.0 --params="'/AddToPath:1'"
-      - name: Install and configure Conan
-        shell: cmd
-        run: |
-          call refreshenv
-          conan profile new default --detect
-          conan profile update conf.tools.system.package_manager:mode=install default
-          conan profile show default
-          echo "%PATH%" >> %GITHUB_PATH%
-          echo "PATH = %PATH%"
+      - name: Setup Conan Client
+        uses: conan-io/setup-conan@v1
+        with:
+          cache_packages: true
+          use_venv: true
 
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}/build
 
-      - name: Install third-party packages
-        shell: bash
-        working-directory: ${{runner.workspace}}/build
-        run: conan install $GITHUB_WORKSPACE/conanfile.txt -s build_type=${{matrix.build_type}} --build missing
-
-      - name: CMake Configure
-        shell: bash
+      - name: Run CMake Configure
         working-directory: ${{runner.workspace}}/build
         run: |
-          echo "PATH: ${PATH}"
-          cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
-                -A ${{matrix.platform}} -DCMAKE_MODULE_PATH=%CD:\=/% \
-                -DENABLE_TESTS=True -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=True \
-                -DBUILD_SHARED_LIBS=True $GITHUB_WORKSPACE
+          cmake -S ${GITHUB_WORKSPACE} \
+                -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES="${GITHUB_WORKSPACE}/cmake/conan_provider.cmake" \
+                -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
+                -DENABLE_TESTS=True \
+                -DENABLE_COVERAGE=True \
+                -A ${{matrix.platform}} \
+                -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=True \
+                -DBUILD_SHARED_LIBS=True
+#
+#      - name: Run CMake Configure
+#        shell: bash
+#        working-directory: ${{runner.workspace}}/build
+#        run: |
+#          echo "PATH: ${PATH}"
+#          cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
+#                -A ${{matrix.platform}} -DCMAKE_MODULE_PATH=%CD:\=/% \
+#                -DENABLE_TESTS=True -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=True \
+#                -DBUILD_SHARED_LIBS=True $GITHUB_WORKSPACE
 
       - name: CMake Build
         working-directory: ${{runner.workspace}}/build
