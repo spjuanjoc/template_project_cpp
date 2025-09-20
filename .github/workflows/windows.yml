@@ -29,14 +29,14 @@ jobs:
         working-directory: ${{runner.workspace}}/build
         run: |
           cmake -S ${GITHUB_WORKSPACE} \
-                -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES="${GITHUB_WORKSPACE}/cmake/conan_provider.cmake" \
+                -A ${{matrix.platform}} \
                 -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
+                -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES="${GITHUB_WORKSPACE}/cmake/conan_provider.cmake" \
                 -DENABLE_TESTS=True \
                 -DENABLE_COVERAGE=True \
-                -A ${{matrix.platform}} \
                 -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=True \
                 -DBUILD_SHARED_LIBS=True
-#
+
 #      - name: Run CMake Configure
 #        shell: bash
 #        working-directory: ${{runner.workspace}}/build
