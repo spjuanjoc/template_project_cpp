@@ -25,8 +25,6 @@ jobs:
 
       - name: Run CMake Configure
         working-directory: ${{runner.workspace}}/build
-        env:
-          CXX: ${{matrix.cxx}}
         run: |
           cmake -S ${GITHUB_WORKSPACE} \
                 -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES="${GITHUB_WORKSPACE}/cmake/conan_provider.cmake" \
