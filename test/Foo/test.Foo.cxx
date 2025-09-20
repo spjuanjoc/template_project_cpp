@@ -18,11 +18,11 @@ using namespace Greet;
 
 TEST_CASE("test the execution of foo in Windows", "[foo]")
 {
-  /*const auto foo = std::make_unique<Foo>(42);
+  const auto foo = std::make_unique<Foo>(42);
 
   foo->greetFromPlatform();
   const std::string_view platform = foo->getPlatform();
-
+/*
   fmt::print("Foo in {}\n", platform);
 
   REQUIRE(platform == "Windows");*/
