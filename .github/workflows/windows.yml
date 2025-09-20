@@ -33,7 +33,7 @@ jobs:
                 -A ${{matrix.platform}} \
                 -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
                 -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES="${GITHUB_WORKSPACE}/cmake/conan_provider.cmake" \
-                -DENABLE_TESTS=False \
+                -DENABLE_TESTS=True \
                 -DENABLE_COVERAGE=False \
                 -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=True \
                 -DBUILD_SHARED_LIBS=True
