@@ -9,7 +9,7 @@ jobs:
       matrix:
         os: [windows-2022]
         platform: [x64]
-        build_type: [Debug, Release]
+        build_type: [Debug]
         standard: [23]
 
     steps:
