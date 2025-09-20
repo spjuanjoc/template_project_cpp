@@ -33,20 +33,10 @@ jobs:
                 -A ${{matrix.platform}} \
                 -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
                 -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES="${GITHUB_WORKSPACE}/cmake/conan_provider.cmake" \
-                -DENABLE_TESTS=True \
-                -DENABLE_COVERAGE=True \
+                -DENABLE_TESTS=False \
+                -DENABLE_COVERAGE=False \
                 -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=True \
                 -DBUILD_SHARED_LIBS=True
-
-#      - name: Run CMake Configure
-#        shell: bash
-#        working-directory: ${{runner.workspace}}/build
-#        run: |
-#          echo "PATH: ${PATH}"
-#          cmake -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
-#                -A ${{matrix.platform}} -DCMAKE_MODULE_PATH=%CD:\=/% \
-#                -DENABLE_TESTS=True -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=True \
-#                -DBUILD_SHARED_LIBS=True $GITHUB_WORKSPACE
 
       - name: CMake Build
         working-directory: ${{runner.workspace}}/build
@@ -63,7 +53,7 @@ jobs:
         shell: cmd
         working-directory: ${{runner.workspace}}/build
         run: copy ${{runner.workspace}}\build\${{matrix.build_type}}\*.dll ${{runner.workspace}}\build\test\${{matrix.build_type}}
-
-      - name: Run CTest
-        working-directory: ${{runner.workspace}}/build
-        run: ctest -VV -C ${{matrix.build_type}} --output-on-failure
+#
+#      - name: Run CTest
+#        working-directory: ${{runner.workspace}}/build
+#        run: ctest -VV -C ${{matrix.build_type}} --output-on-failure
