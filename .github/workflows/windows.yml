@@ -49,11 +49,11 @@ jobs:
           ldd ${{runner.workspace}}/build/test/${{matrix.build_type}}/template_project_cpp_AllTests.exe
           ldd ${{runner.workspace}}/build/${{matrix.build_type}}/template_project_cpp.dll
 
-      - name: Copy DLL
+      - name: Copy DLL to test directory
         shell: cmd
         working-directory: ${{runner.workspace}}/build
         run: copy ${{runner.workspace}}\build\${{matrix.build_type}}\*.dll ${{runner.workspace}}\build\test\${{matrix.build_type}}
-#
-#      - name: Run CTest
-#        working-directory: ${{runner.workspace}}/build
-#        run: ctest -VV -C ${{matrix.build_type}} --output-on-failure
+
+      - name: Run CTest
+        working-directory: ${{runner.workspace}}/build
+        run: CTest -VV -C ${{matrix.build_type}} --output-on-failure

@@ -24,6 +24,6 @@ TEST_CASE("test the execution of foo in Windows", "[foo]")
   const std::string_view platform = foo->getPlatform();
 /*
   fmt::print("Foo in {}\n", platform);
-
-  REQUIRE(platform == "Windows");*/
+*/
+  REQUIRE(platform == "Windows");
 }
