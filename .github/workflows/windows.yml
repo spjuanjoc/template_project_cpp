@@ -9,8 +9,8 @@ jobs:
       matrix:
         os: [windows-2022]
         platform: [x64]
-        build_type: [Release]
-        standard: [20]
+        build_type: [Debug, Release]
+        standard: [23]
 
     steps:
       - name: Checkout Code
