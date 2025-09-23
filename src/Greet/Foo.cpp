@@ -29,7 +29,7 @@ Foo::greetFromPlatform() const
   fmt::print("Hello foo: {} from {}\n", m_value, getPlatform());
 }
 
-std::string_view
+std::string
 Foo::getPlatform() const
 {
   return m_platform;

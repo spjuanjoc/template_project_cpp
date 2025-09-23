@@ -9,7 +9,7 @@
 #ifndef FOO_H
 #define FOO_H
 
-#include <string_view>
+#include <string>
 
 namespace Greet
 {
@@ -27,11 +27,11 @@ public:
 
   void setPlatform();
 
-  std::string_view getPlatform() const;
+  std::string getPlatform() const;
 
 private:
-  int              m_value {};
-  std::string_view m_platform;
+  int         m_value {};
+  std::string m_platform;
 };
 
 }  // namespace Greet

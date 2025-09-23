@@ -10,7 +10,7 @@
 #include <fmt/core.h>
 
 #include <memory>
-#include <string_view>
+#include <string>
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -21,7 +21,7 @@ TEST_CASE("test the execution of foo in Linux", "[foo]")
   const auto foo = std::make_unique<Foo>(42);
 
   foo->greetFromPlatform();
-  const std::string_view platform = foo->getPlatform();
+  const auto platform = foo->getPlatform();
 
   fmt::print("Foo in {}\n", platform);
 
