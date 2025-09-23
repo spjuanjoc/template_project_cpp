@@ -25,5 +25,5 @@ TEST_CASE("test the execution of foo in Windows", "[foo]")
 
   fmt::print("Foo in {}\n", platform);
 
- // REQUIRE(platform == "Windows");
+  REQUIRE(platform == "Windows");
 }

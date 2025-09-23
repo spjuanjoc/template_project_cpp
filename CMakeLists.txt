@@ -47,7 +47,7 @@ find_package(fmt REQUIRED)
 
 
 ## Target
-target_include_directories(${PROJECT_NAME} PRIVATE include)
+target_include_directories(${PROJECT_NAME} PRIVATE include ${fmt_INCLUDE_DIRS} )
 target_link_libraries(${PROJECT_NAME} PRIVATE ${fmt_LIBRARIES})
 
 
@@ -71,7 +71,7 @@ endif ()
 ## Sanitizers
 ##  Address (ASan)
 ##  Undefined Behavior (UBSan) (More on Undefined Behavior later)
-##  Thread
+##  Thread (TSan)
 
 
 ## Install commands
