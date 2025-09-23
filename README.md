@@ -14,13 +14,11 @@ dependencies: Catch2 for testing, and fmt. Format with clang-format
 
 ## Build Status
 
-| System   | App        | Status                                                                                                                                                                                           |
-|----------|------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Linux    | GH Actions | [![linux](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/linux.yml/badge.svg?branch=main)](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/linux.yml)   |
-| OSX      | GH Actions | [![macos](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/macosx.yml/badge.svg?branch=main)](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/macosx.yml) |
-
-[//]: # (| Win x64  | GH Actions                                                                                                                                                                                       | [![windows]&#40;https://github.com/spjuanjoc/template_project_cpp/actions/workflows/windows.yml/badge.svg&#41;]&#40;https://github.com/spjuanjoc/template_project_cpp/actions/workflows/windows.yml&#41;       |)
-
+| System  | App        |                                                                                              Status                                                                                              |
+|---------|------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| Linux   | GH Actions |  [![linux](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/linux.yml/badge.svg?branch=main)](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/linux.yml)  |
+| OSX     | GH Actions | [![macos](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/macosx.yml/badge.svg?branch=main)](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/macosx.yml) |
+| Win x64 | GH Actions |     [![windows](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/windows.yml/badge.svg)](https://github.com/spjuanjoc/template_project_cpp/actions/workflows/windows.yml)     |
 
 ## Code Coverage
 
