@@ -25,17 +25,6 @@ set_compiler_options(${TEST_NAME})
 find_package(Catch2 REQUIRED)
 find_package(fmt REQUIRED)
 
-include(CTest)
-include(Catch)
-catch_discover_tests(${TEST_NAME})
-
-message(STATUS "
-Catch2_INCLUDE_DIRS: ${Catch2_INCLUDE_DIRS}
-Catch2_LIBRARIES: ${Catch2_LIBRARIES}
-fmt_INCLUDE_DIRS: ${fmt_INCLUDE_DIRS}
-fmt_LIBRARIES: ${fmt_LIBRARIES}
-PROJECT_NAME: ${PROJECT_NAME}
-")
 
 ## Target
 target_include_directories(${TEST_NAME}
