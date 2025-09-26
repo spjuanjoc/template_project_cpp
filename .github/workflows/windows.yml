@@ -25,7 +25,7 @@ jobs:
         shell: bash
         run: |
           CONAN_CONFIG_HOME_VAR=$(conan config home)
-          sed -i s/cppstd=17/cppstd=20/g ${CONAN_CONFIG_HOME_VAR}/profiles/default
+          sed -i 's/cppstd=14/cppstd=20/g' ${CONAN_CONFIG_HOME_VAR}/profiles/default
           conan profile show
 
       - name: Create Build Environment

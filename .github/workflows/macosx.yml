@@ -22,7 +22,7 @@ jobs:
       - name: Update Conan Profile
         run: |
           CONAN_CONFIG_HOME_VAR=$(conan config home)
-          sed -i s/cppstd=gnu17/cppstd=gnu20/g ${CONAN_CONFIG_HOME_VAR}/profiles/default
+          sed -i '' 's/cppstd=gnu17/cppstd=gnu20/g' ${CONAN_CONFIG_HOME_VAR}/profiles/default
           conan profile show
 
       - name: Create Build Environment
