@@ -129,7 +129,7 @@ function(set_compiler_options TARGET_NAME)
   endif()
 
   target_compile_options(${TARGET_NAME} PRIVATE $<$<COMPILE_LANGUAGE:CXX>:${COMPILER_OPTIONS}>) # for header-only use INTERFACE
-  target_compile_features(${TARGET_NAME} PUBLIC cxx_std_23)
+  target_compile_features(${TARGET_NAME} PUBLIC cxx_std_20)
 
   get_property(TARGET_STD TARGET ${TARGET_NAME} PROPERTY CXX_STANDARD)
 
