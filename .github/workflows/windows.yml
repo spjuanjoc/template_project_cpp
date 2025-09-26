@@ -10,10 +10,9 @@ jobs:
         os: [windows-2022]
         platform: [x64]
         build_type: [Debug]
-        standard: [23]
 
     steps:
-      - name: Checkout Code
+      - name: Set GH Checkout Action
         uses: actions/checkout@v4
 
       - name: Setup Conan Client
@@ -21,6 +20,13 @@ jobs:
         with:
           cache_packages: true
           use_venv: true
+
+      - name: Update Conan Profile
+        shell: bash
+        run: |
+          CONAN_CONFIG_HOME_VAR=$(conan config home)
+          sed -i s/cppstd=17/cppstd=20/g ${CONAN_CONFIG_HOME_VAR}/profiles/default
+          conan profile show
 
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}/build

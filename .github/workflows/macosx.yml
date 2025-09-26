@@ -10,7 +10,7 @@ jobs:
         build_type: [Debug]
 
     steps:
-      - name: Checkout Code
+      - name: Set GH Checkout Action
         uses: actions/checkout@v4
 
       - name: Setup Conan Client
@@ -18,6 +18,12 @@ jobs:
         with:
           cache_packages: true
           use_venv: true
+
+      - name: Update Conan Profile
+        run: |
+          CONAN_CONFIG_HOME_VAR=$(conan config home)
+          sed -i s/cppstd=gnu17/cppstd=gnu20/g ${CONAN_CONFIG_HOME_VAR}/profiles/default
+          conan profile show
 
       - name: Create Build Environment
         run: |

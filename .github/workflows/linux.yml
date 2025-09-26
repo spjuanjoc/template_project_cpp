@@ -9,11 +9,10 @@ jobs:
       matrix:
         cxx: [g++]
         build_type: [Debug]
-        std: [23]
         os: [ubuntu-24.04]
 
     steps:
-      - name: Checkout Code
+      - name: Set GH Checkout Action
         uses: actions/checkout@v4
 
       - name: Install Python Virtual Environment
@@ -31,6 +30,12 @@ jobs:
         with:
           cache_packages: true
           use_venv: true
+
+      - name: Update Conan Profile
+        run: |
+          CONAN_CONFIG_HOME_VAR=$(conan config home)
+          sed -i s/cppstd=gnu17/cppstd=gnu20/g ${CONAN_CONFIG_HOME_VAR}/profiles/default
+          conan profile show
 
       - name: Install Ubuntu Packages
         run: |
